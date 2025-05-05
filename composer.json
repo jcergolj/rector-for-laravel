@@ -1,0 +1,26 @@
+{
+    "name": "jcergolj/rector-for-laravel",
+    "description": "Rector rules for Laravel projects",
+    "require": {
+        "driftingly/rector-laravel": "2.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jcergolj\\RectorForLaravel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Janez Cergolj"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jcergolj\\RectorForLaravel\\RectorForLaravelServiceProvider"
+            ]
+        }
+    }
+}
