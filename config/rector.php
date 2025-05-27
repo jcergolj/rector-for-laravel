@@ -50,9 +50,9 @@ return RectorConfig::configure()
             $basePath . '/tests',
         ];
     })())
-    ->withImportNames()
     ->withPhpSets(php83: true)
     ->withRules([
+        AddVoidReturnTypeWhereNoReturnRector::class,
         AnonymousMigrationsRector::class,
         AppEnvironmentComparisonToParameterRector::class,
         ApplyDefaultInsteadOfNullCoalesceRector::class,
@@ -94,6 +94,5 @@ return RectorConfig::configure()
         earlyReturn: true,
         strictBooleans: true,
         carbon: true,
-        typeDeclarations: true,
         phpunitCodeQuality: true,
-    )->withSets([LaravelLevelSetList::UP_TO_LARAVEL_110]);
+    );
