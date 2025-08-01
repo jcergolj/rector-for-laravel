@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use RectorLaravel\Set\LaravelLevelSetList;
 use RectorLaravel\Rector\If_\ThrowIfRector;
 use RectorLaravel\Rector\If_\ReportIfRector;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
@@ -13,6 +14,7 @@ use RectorLaravel\Rector\FuncCall\RemoveDumpDataDeadCodeRector;
 use RectorLaravel\Rector\FuncCall\SleepFuncToSleepStaticCallRector;
 use RectorLaravel\Rector\MethodCall\RedirectBackToBackHelperRector;
 use RectorLaravel\Rector\FuncCall\FactoryFuncCallToStaticCallRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use RectorLaravel\Rector\MethodCall\AssertStatusToAssertMethodRector;
 use RectorLaravel\Rector\MethodCall\JsonCallToExplicitJsonCallRector;
 use RectorLaravel\Rector\StaticCall\CarbonSetTestNowToTravelToRector;
@@ -31,7 +33,6 @@ use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRect
 use RectorLaravel\Rector\FuncCall\NowFuncWithStartOfDayMethodCallToTodayFuncRector;
 use RectorLaravel\Rector\MethodCall\EloquentWhereRelationTypeHintingParameterRector;
 use RectorLaravel\Rector\FuncCall\ThrowIfAndThrowUnlessExceptionsToUseClassStringRector;
-use RectorLaravel\Set\LaravelLevelSetList;
 
 
 
@@ -95,4 +96,6 @@ return RectorConfig::configure()
         strictBooleans: true,
         carbon: true,
         phpunitCodeQuality: true,
-    );
+    )->withSkip([
+        YieldDataProviderRector::class,
+    ]);
