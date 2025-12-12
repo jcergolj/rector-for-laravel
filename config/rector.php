@@ -93,7 +93,6 @@ return RectorConfig::configure()
         codeQuality: true,
         instanceOf: true,
         earlyReturn: true,
-        strictBooleans: true,
         carbon: true,
         phpunitCodeQuality: true,
     )->withSkip([
