@@ -51,7 +51,7 @@ return RectorConfig::configure()
             $basePath . '/tests',
         ];
     })())
-    ->withPhpSets(php83: true)
+    ->withPhpSets(php84: true, php85: true)
     ->withRules([
         AddVoidReturnTypeWhereNoReturnRector::class,
         AnonymousMigrationsRector::class,
@@ -97,4 +97,5 @@ return RectorConfig::configure()
         phpunitCodeQuality: true,
     )->withSkip([
         YieldDataProviderRector::class,
+        RequestStaticValidateToInjectRector::class => [__DIR__.'/tests'],
     ]);
