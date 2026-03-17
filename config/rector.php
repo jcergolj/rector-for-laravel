@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use RectorLaravel\Set\LaravelLevelSetList;
 use RectorLaravel\Rector\If_\ThrowIfRector;
+use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use RectorLaravel\Rector\If_\ReportIfRector;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use RectorLaravel\Rector\Class_\AnonymousMigrationsRector;
@@ -97,5 +98,6 @@ return RectorConfig::configure()
         phpunitCodeQuality: true,
     )->withSkip([
         YieldDataProviderRector::class,
+        FinalizeTestCaseClassRector::class,
         RequestStaticValidateToInjectRector::class => [__DIR__.'/tests'],
     ]);
