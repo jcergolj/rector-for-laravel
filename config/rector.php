@@ -2,57 +2,61 @@
 
 declare(strict_types=1);
 
-use Rector\Config\RectorConfig;
-use RectorLaravel\Set\LaravelLevelSetList;
-use RectorLaravel\Rector\If_\ThrowIfRector;
-use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
-use RectorLaravel\Rector\If_\ReportIfRector;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
+use Rector\Config\RectorConfig;
+use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
+use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
 use RectorLaravel\Rector\Class_\AnonymousMigrationsRector;
-use RectorLaravel\Rector\Namespace_\FactoryDefinitionRector;
-use RectorLaravel\Rector\StaticCall\RouteActionCallableRector;
+use RectorLaravel\Rector\Class_\RemoveModelPropertyFromFactoriesRector;
+use RectorLaravel\Rector\Coalesce\ApplyDefaultInsteadOfNullCoalesceRector;
+use RectorLaravel\Rector\Expr\AppEnvironmentComparisonToParameterRector;
+use RectorLaravel\Rector\FuncCall\FactoryFuncCallToStaticCallRector;
+use RectorLaravel\Rector\FuncCall\NowFuncWithStartOfDayMethodCallToTodayFuncRector;
 use RectorLaravel\Rector\FuncCall\RemoveDumpDataDeadCodeRector;
 use RectorLaravel\Rector\FuncCall\SleepFuncToSleepStaticCallRector;
-use RectorLaravel\Rector\MethodCall\RedirectBackToBackHelperRector;
-use RectorLaravel\Rector\FuncCall\FactoryFuncCallToStaticCallRector;
-use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
+use RectorLaravel\Rector\FuncCall\ThrowIfAndThrowUnlessExceptionsToUseClassStringRector;
+use RectorLaravel\Rector\If_\ReportIfRector;
+use RectorLaravel\Rector\If_\ThrowIfRector;
 use RectorLaravel\Rector\MethodCall\AssertStatusToAssertMethodRector;
-use RectorLaravel\Rector\MethodCall\JsonCallToExplicitJsonCallRector;
-use RectorLaravel\Rector\StaticCall\CarbonSetTestNowToTravelToRector;
-use RectorLaravel\Rector\Class_\RemoveModelPropertyFromFactoriesRector;
-use RectorLaravel\Rector\MethodCall\RedirectRouteToToRouteHelperRector;
-use RectorLaravel\Rector\Expr\AppEnvironmentComparisonToParameterRector;
-use RectorLaravel\Rector\PropertyFetch\OptionalToNullsafeOperatorRector;
-use RectorLaravel\Rector\StaticCall\RequestStaticValidateToInjectRector;
-use RectorLaravel\Rector\Coalesce\ApplyDefaultInsteadOfNullCoalesceRector;
 use RectorLaravel\Rector\MethodCall\EloquentOrderByToLatestOrOldestRector;
+use RectorLaravel\Rector\MethodCall\EloquentWhereRelationTypeHintingParameterRector;
+use RectorLaravel\Rector\MethodCall\EloquentWhereTypeHintClosureParameterRector;
+use RectorLaravel\Rector\MethodCall\JsonCallToExplicitJsonCallRector;
+use RectorLaravel\Rector\MethodCall\RedirectBackToBackHelperRector;
+use RectorLaravel\Rector\MethodCall\RedirectRouteToToRouteHelperRector;
 use RectorLaravel\Rector\MethodCall\ResponseHelperCallToJsonResponseRector;
 use RectorLaravel\Rector\MethodCall\UseComponentPropertyWithinCommandsRector;
-use RectorLaravel\Rector\MethodCall\EloquentWhereTypeHintClosureParameterRector;
 use RectorLaravel\Rector\MethodCall\ValidationRuleArrayStringValueToArrayRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
-use RectorLaravel\Rector\FuncCall\NowFuncWithStartOfDayMethodCallToTodayFuncRector;
-use RectorLaravel\Rector\MethodCall\EloquentWhereRelationTypeHintingParameterRector;
-use RectorLaravel\Rector\FuncCall\ThrowIfAndThrowUnlessExceptionsToUseClassStringRector;
-
-
+use RectorLaravel\Rector\Namespace_\FactoryDefinitionRector;
+use RectorLaravel\Rector\PropertyFetch\OptionalToNullsafeOperatorRector;
+use RectorLaravel\Rector\StaticCall\CarbonSetTestNowToTravelToRector;
+use RectorLaravel\Rector\StaticCall\RequestStaticValidateToInjectRector;
+use RectorLaravel\Rector\StaticCall\RouteActionCallableRector;
 
 return RectorConfig::configure()
     ->withPaths((function () {
-        $isRootLevel = file_exists(__DIR__ . '/artisan');
-        $basePath = $isRootLevel ? __DIR__ : realpath(__DIR__ . '/../../../../');
+        $isRootLevel = file_exists(__DIR__.'/artisan');
+        $basePath = $isRootLevel ? __DIR__ : realpath(__DIR__.'/../../../../');
 
         return [
-            $basePath . '/app',
-            $basePath . '/bootstrap',
-            $basePath . '/config',
-            $basePath . '/public',
-            $basePath . '/resources',
-            $basePath . '/routes',
-            $basePath . '/tests',
+            $basePath.'/app',
+            $basePath.'/bootstrap',
+            $basePath.'/config',
+            $basePath.'/public',
+            $basePath.'/resources',
+            $basePath.'/routes',
+            $basePath.'/tests',
         ];
     })())
-    ->withPhpSets(php84: true, php85: true)
+    ->withPhpSets(php83: true)
+    ->withSkip([
+        ClosureToArrowFunctionRector::class,
+        FinalizeTestCaseClassRector::class,
+        RequestStaticValidateToInjectRector::class => [
+            __DIR__.'/tests',
+        ],
+    ])
     ->withRules([
         AddVoidReturnTypeWhereNoReturnRector::class,
         AnonymousMigrationsRector::class,
@@ -85,9 +89,10 @@ return RectorConfig::configure()
     ->withCache(
         cacheClass: FileCacheStorage::class,
         cacheDirectory: (function () {
-            $isRootLevel = file_exists(__DIR__ . '/artisan');
-            $basePath = $isRootLevel ? __DIR__ : realpath(__DIR__ . '/../../../../');
-            return $basePath . '/.rector';
+            $isRootLevel = file_exists(__DIR__.'/artisan');
+            $basePath = $isRootLevel ? __DIR__ : realpath(__DIR__.'/../../../../');
+
+            return $basePath.'/.rector';
         })()
     )->withPreparedSets(
         deadCode: true,
@@ -96,8 +101,4 @@ return RectorConfig::configure()
         earlyReturn: true,
         carbon: true,
         phpunitCodeQuality: true,
-    )->withSkip([
-        YieldDataProviderRector::class,
-        FinalizeTestCaseClassRector::class,
-        RequestStaticValidateToInjectRector::class => [__DIR__.'/tests'],
-    ]);
+    );
