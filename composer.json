@@ -4,6 +4,15 @@
     "require": {
         "driftingly/rector-laravel": "2.*"
     },
+    "scripts": {
+        "pint": "vendor/bin/pint",
+        "analyse": [
+            "@pint"
+        ]
+    },
+    "require-dev": {
+        "laravel/pint": "^1.9"
+    },
     "license": "MIT",
     "autoload": {
         "psr-4": {

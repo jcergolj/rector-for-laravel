@@ -9,7 +9,7 @@ class RectorForLaravelServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/rector.php' => base_path('rector.php'),
+            __DIR__.'/../config/rector.php' => base_path('rector.php'),
         ], 'rector-for-laravel-config');
     }
 
