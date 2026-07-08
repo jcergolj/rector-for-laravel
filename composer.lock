@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45426e86e540b4e4807f8badfb4c3ecd",
+    "content-hash": "47ad341a296ea46827bc3facbf74981c",
     "packages": [
         {
             "name": "driftingly/rector-laravel",
@@ -302,6 +302,1949 @@
                 "source": "https://github.com/laravel/pint"
             },
             "time": "2026-06-16T15:34:04+00:00"
+        },
+        {
+            "name": "myclabs/deep-copy",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/myclabs/DeepCopy.git",
+                "reference": "5ee4e978b7fec6dbd844282126a5a32daa2044c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5ee4e978b7fec6dbd844282126a5a32daa2044c6",
+                "reference": "5ee4e978b7fec6dbd844282126a5a32daa2044c6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "doctrine/collections": "<1.6.8",
+                "doctrine/common": "<2.13.3 || >=3 <3.2.2"
+            },
+            "require-dev": {
+                "doctrine/collections": "^1.6.8",
+                "doctrine/common": "^2.13.3 || ^3.2.2",
+                "phpspec/prophecy": "^1.10",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/DeepCopy/deep_copy.php"
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Create deep copies (clones) of your objects",
+            "keywords": [
+                "clone",
+                "copy",
+                "duplicate",
+                "object",
+                "object graph"
+            ],
+            "support": {
+                "issues": "https://github.com/myclabs/DeepCopy/issues",
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.x"
+            },
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-12-30T16:10:21+00:00"
+        },
+        {
+            "name": "nikic/php-parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "044a6a392ff8ad0d61f14370a5fbbd0a0107152f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/044a6a392ff8ad0d61f14370a5fbbd0a0107152f",
+                "reference": "044a6a392ff8ad0d61f14370a5fbbd0a0107152f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-tokenizer": "*",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "ircmaxell/php-yacc": "^0.0.7",
+                "phpunit/phpunit": "^9.0"
+            },
+            "default-branch": true,
+            "bin": [
+                "bin/php-parse"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpParser\\": "lib/PhpParser"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov"
+                }
+            ],
+            "description": "A PHP parser written in PHP",
+            "keywords": [
+                "parser",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/nikic/PHP-Parser/issues",
+                "source": "https://github.com/nikic/PHP-Parser/tree/master"
+            },
+            "time": "2026-07-04T14:30:18+00:00"
+        },
+        {
+            "name": "phar-io/manifest",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phar-io/manifest.git",
+                "reference": "c581d4941e196459bf76c945a8ca922963a66708"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phar-io/manifest/zipball/c581d4941e196459bf76c945a8ca922963a66708",
+                "reference": "c581d4941e196459bf76c945a8ca922963a66708",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "ext-phar": "*",
+                "ext-xmlwriter": "*",
+                "phar-io/version": "^3.0.1",
+                "php": "^7.2 || ^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Arne Blankerts",
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian Heuer",
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
+            "support": {
+                "issues": "https://github.com/phar-io/manifest/issues",
+                "source": "https://github.com/phar-io/manifest/tree/master"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/theseer",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-11-27T15:23:09+00:00"
+        },
+        {
+            "name": "phar-io/version",
+            "version": "3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phar-io/version.git",
+                "reference": "4f7fd7836c6f332bb2933569e566a0d6c4cbed74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/4f7fd7836c6f332bb2933569e566a0d6c4cbed74",
+                "reference": "4f7fd7836c6f332bb2933569e566a0d6c4cbed74",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Arne Blankerts",
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian Heuer",
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Library for handling version information and constraints",
+            "support": {
+                "issues": "https://github.com/phar-io/version/issues",
+                "source": "https://github.com/phar-io/version/tree/3.2.1"
+            },
+            "time": "2022-02-21T01:04:05+00:00"
+        },
+        {
+            "name": "phpunit/php-code-coverage",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "8ffd050211ae3d23d39670223de24a1091ae023c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/8ffd050211ae3d23d39670223de24a1091ae023c",
+                "reference": "8ffd050211ae3d23d39670223de24a1091ae023c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "ext-mbstring": "*",
+                "ext-xmlwriter": "*",
+                "nikic/php-parser": "^5.8.0",
+                "php": ">=8.4",
+                "phpunit/php-text-template": "^6.0",
+                "sebastian/complexity": "^6.0",
+                "sebastian/environment": "^9.3.2",
+                "sebastian/git-state": "^1.0",
+                "sebastian/lines-of-code": "^5.0.1",
+                "sebastian/version": "^7.0",
+                "theseer/tokenizer": "^2.0.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "suggest": {
+                "ext-pcov": "PHP extension that provides line coverage",
+                "ext-xdebug": "PHP extension that provides line coverage as well as branch and path coverage"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "14.3.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
+            "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
+            "keywords": [
+                "coverage",
+                "testing",
+                "xunit"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
+                "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/php-code-coverage",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-07T05:12:43+00:00"
+        },
+        {
+            "name": "phpunit/php-file-iterator",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
+                "reference": "403d0a9f0305a3239ff7c4d12edfffd737bf2a6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/403d0a9f0305a3239ff7c4d12edfffd737bf2a6a",
+                "reference": "403d0a9f0305a3239ff7c4d12edfffd737bf2a6a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "7.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "FilterIterator implementation that filters files based on a list of suffixes.",
+            "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
+            "keywords": [
+                "filesystem",
+                "iterator"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/php-file-iterator/issues",
+                "security": "https://github.com/sebastianbergmann/php-file-iterator/security/policy",
+                "source": "https://github.com/sebastianbergmann/php-file-iterator/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/php-file-iterator",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T22:03:54+00:00"
+        },
+        {
+            "name": "phpunit/php-invoker",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-invoker.git",
+                "reference": "f328b78535dfa22b75f5287dcab672b4d2e0327c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-invoker/zipball/f328b78535dfa22b75f5287dcab672b4d2e0327c",
+                "reference": "f328b78535dfa22b75f5287dcab672b4d2e0327c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "ext-pcntl": "*",
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "suggest": {
+                "ext-pcntl": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "7.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Invoke callables with a timeout",
+            "homepage": "https://github.com/sebastianbergmann/php-invoker/",
+            "keywords": [
+                "process"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/php-invoker/issues",
+                "security": "https://github.com/sebastianbergmann/php-invoker/security/policy",
+                "source": "https://github.com/sebastianbergmann/php-invoker/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/php-invoker",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T23:03:15+00:00"
+        },
+        {
+            "name": "phpunit/php-text-template",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-text-template.git",
+                "reference": "e3c1180440c1484f979485d79bbe613362d9607d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/e3c1180440c1484f979485d79bbe613362d9607d",
+                "reference": "e3c1180440c1484f979485d79bbe613362d9607d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "6.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Simple template engine.",
+            "homepage": "https://github.com/sebastianbergmann/php-text-template/",
+            "keywords": [
+                "template"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/php-text-template/issues",
+                "security": "https://github.com/sebastianbergmann/php-text-template/security/policy",
+                "source": "https://github.com/sebastianbergmann/php-text-template/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/php-text-template",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T21:58:28+00:00"
+        },
+        {
+            "name": "phpunit/php-timer",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-timer.git",
+                "reference": "141df45fe2af6afa19f0533e08d8494c16dc1a03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/141df45fe2af6afa19f0533e08d8494c16dc1a03",
+                "reference": "141df45fe2af6afa19f0533e08d8494c16dc1a03",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "9.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Utility class for timing",
+            "homepage": "https://github.com/sebastianbergmann/php-timer/",
+            "keywords": [
+                "timer"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/php-timer/issues",
+                "security": "https://github.com/sebastianbergmann/php-timer/security/policy",
+                "source": "https://github.com/sebastianbergmann/php-timer/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/php-timer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-07T00:11:10+00:00"
+        },
+        {
+            "name": "phpunit/phpunit",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "b7328dc843e131da3fdd9247bec5f6ee7e7e23e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b7328dc843e131da3fdd9247bec5f6ee7e7e23e6",
+                "reference": "b7328dc843e131da3fdd9247bec5f6ee7e7e23e6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-filter": "*",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "ext-mbstring": "*",
+                "ext-xmlwriter": "*",
+                "myclabs/deep-copy": "^1.13.4",
+                "phar-io/manifest": "^2.0.4",
+                "phar-io/version": "^3.2.1",
+                "php": ">=8.4.1",
+                "phpunit/php-code-coverage": "^14.2.3",
+                "phpunit/php-file-iterator": "^7.0.0",
+                "phpunit/php-invoker": "^7.0.0",
+                "phpunit/php-text-template": "^6.0.0",
+                "phpunit/php-timer": "^9.0.0",
+                "sebastian/cli-parser": "^5.0.0",
+                "sebastian/comparator": "^8.3.0",
+                "sebastian/diff": "^9.0",
+                "sebastian/environment": "^9.3.2",
+                "sebastian/exporter": "^8.1.0",
+                "sebastian/file-filter": "^1.0",
+                "sebastian/git-state": "^1.0",
+                "sebastian/global-state": "^9.0.1",
+                "sebastian/object-enumerator": "^8.0.0",
+                "sebastian/recursion-context": "^8.0.0",
+                "sebastian/type": "^7.0.1",
+                "sebastian/version": "^7.0.0",
+                "staabm/side-effects-detector": "^1.0.5"
+            },
+            "default-branch": true,
+            "bin": [
+                "phpunit"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "13.3-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Framework/Assert/Functions.php"
+                ],
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "The PHP Unit Testing framework.",
+            "homepage": "https://phpunit.de/",
+            "keywords": [
+                "phpunit",
+                "testing",
+                "xunit"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/phpunit/issues",
+                "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://phpunit.de/sponsoring.html",
+                    "type": "other"
+                }
+            ],
+            "time": "2026-07-08T08:38:05+00:00"
+        },
+        {
+            "name": "sebastian/cli-parser",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/cli-parser.git",
+                "reference": "d884911744e88deb0b330d502cd40cbc39a22ed5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/cli-parser/zipball/d884911744e88deb0b330d502cd40cbc39a22ed5",
+                "reference": "d884911744e88deb0b330d502cd40cbc39a22ed5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library for parsing CLI options",
+            "homepage": "https://github.com/sebastianbergmann/cli-parser",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/cli-parser/issues",
+                "security": "https://github.com/sebastianbergmann/cli-parser/security/policy",
+                "source": "https://github.com/sebastianbergmann/cli-parser/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/cli-parser",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T23:31:22+00:00"
+        },
+        {
+            "name": "sebastian/comparator",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/comparator.git",
+                "reference": "71b797fb840d1922b64c952aa872b73370f29d66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/71b797fb840d1922b64c952aa872b73370f29d66",
+                "reference": "71b797fb840d1922b64c952aa872b73370f29d66",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "php": ">=8.4",
+                "sebastian/diff": "^9.0",
+                "sebastian/exporter": "^8.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "suggest": {
+                "ext-bcmath": "For comparing BcMath\\Number objects"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "8.3-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                },
+                {
+                    "name": "Jeff Welch",
+                    "email": "whatthejeff@gmail.com"
+                },
+                {
+                    "name": "Volker Dusch",
+                    "email": "github@wallbash.com"
+                },
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@2bepublished.at"
+                }
+            ],
+            "description": "Provides the functionality to compare PHP values for equality",
+            "homepage": "https://github.com/sebastianbergmann/comparator",
+            "keywords": [
+                "comparator",
+                "compare",
+                "equality"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/comparator/issues",
+                "security": "https://github.com/sebastianbergmann/comparator/security/policy",
+                "source": "https://github.com/sebastianbergmann/comparator/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/comparator",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-07T00:06:32+00:00"
+        },
+        {
+            "name": "sebastian/complexity",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/complexity.git",
+                "reference": "89baec21908e3eccb78ce8692ada50c0411256c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/complexity/zipball/89baec21908e3eccb78ce8692ada50c0411256c7",
+                "reference": "89baec21908e3eccb78ce8692ada50c0411256c7",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^5.8.0",
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "6.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library for calculating the complexity of PHP code units",
+            "homepage": "https://github.com/sebastianbergmann/complexity",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/complexity/issues",
+                "security": "https://github.com/sebastianbergmann/complexity/security/policy",
+                "source": "https://github.com/sebastianbergmann/complexity/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/complexity",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T23:35:10+00:00"
+        },
+        {
+            "name": "sebastian/diff",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/diff.git",
+                "reference": "21f60be79d215bd56f8462a0b0eabd7e43252d8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/21f60be79d215bd56f8462a0b0eabd7e43252d8a",
+                "reference": "21f60be79d215bd56f8462a0b0eabd7e43252d8a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3",
+                "symfony/process": "^7.4.13"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "9.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                },
+                {
+                    "name": "Kore Nordmann",
+                    "email": "mail@kore-nordmann.de"
+                }
+            ],
+            "description": "Diff implementation",
+            "homepage": "https://github.com/sebastianbergmann/diff",
+            "keywords": [
+                "diff",
+                "udiff",
+                "unidiff",
+                "unified diff"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/diff/issues",
+                "security": "https://github.com/sebastianbergmann/diff/security/policy",
+                "source": "https://github.com/sebastianbergmann/diff/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/diff",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T23:00:41+00:00"
+        },
+        {
+            "name": "sebastian/environment",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/environment.git",
+                "reference": "da1aaa2dc2940d48caa7272ba95441efe60d0f76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/da1aaa2dc2940d48caa7272ba95441efe60d0f76",
+                "reference": "da1aaa2dc2940d48caa7272ba95441efe60d0f76",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "suggest": {
+                "ext-posix": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "9.3-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Provides functionality to handle HHVM/PHP environments",
+            "homepage": "https://github.com/sebastianbergmann/environment",
+            "keywords": [
+                "Xdebug",
+                "environment",
+                "hhvm"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/environment/issues",
+                "security": "https://github.com/sebastianbergmann/environment/security/policy",
+                "source": "https://github.com/sebastianbergmann/environment/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/environment",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T21:52:53+00:00"
+        },
+        {
+            "name": "sebastian/exporter",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/exporter.git",
+                "reference": "80e37628a95dcf70ab4bd3583dbf969c60fb9fbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/80e37628a95dcf70ab4bd3583dbf969c60fb9fbe",
+                "reference": "80e37628a95dcf70ab4bd3583dbf969c60fb9fbe",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=8.4",
+                "sebastian/recursion-context": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "8.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                },
+                {
+                    "name": "Jeff Welch",
+                    "email": "whatthejeff@gmail.com"
+                },
+                {
+                    "name": "Volker Dusch",
+                    "email": "github@wallbash.com"
+                },
+                {
+                    "name": "Adam Harvey",
+                    "email": "aharvey@php.net"
+                },
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Provides the functionality to export PHP variables for visualization",
+            "homepage": "https://www.github.com/sebastianbergmann/exporter",
+            "keywords": [
+                "export",
+                "exporter"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/exporter/issues",
+                "security": "https://github.com/sebastianbergmann/exporter/security/policy",
+                "source": "https://github.com/sebastianbergmann/exporter/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/exporter",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T20:51:12+00:00"
+        },
+        {
+            "name": "sebastian/file-filter",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/file-filter.git",
+                "reference": "202f5d80a62567e3ce623f99d998f14d493efa44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/file-filter/zipball/202f5d80a62567e3ce623f99d998f14d493efa44",
+                "reference": "202f5d80a62567e3ce623f99d998f14d493efa44",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library for filtering files",
+            "homepage": "https://github.com/sebastianbergmann/file-filter",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/file-filter/issues",
+                "security": "https://github.com/sebastianbergmann/file-filter/security/policy",
+                "source": "https://github.com/sebastianbergmann/file-filter/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/file-filter",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T20:13:30+00:00"
+        },
+        {
+            "name": "sebastian/git-state",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/git-state.git",
+                "reference": "8361666fe05ebd58ffa06ccbfd37205d6072a659"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/git-state/zipball/8361666fe05ebd58ffa06ccbfd37205d6072a659",
+                "reference": "8361666fe05ebd58ffa06ccbfd37205d6072a659",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library for describing the state of a Git checkout",
+            "homepage": "https://github.com/sebastianbergmann/git-state",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/git-state/issues",
+                "security": "https://github.com/sebastianbergmann/git-state/security/policy",
+                "source": "https://github.com/sebastianbergmann/git-state/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/git-state",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-07T01:10:15+00:00"
+        },
+        {
+            "name": "sebastian/global-state",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/global-state.git",
+                "reference": "521ccbc84d11032760b2b9caadf3a4089a5220ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/521ccbc84d11032760b2b9caadf3a4089a5220ee",
+                "reference": "521ccbc84d11032760b2b9caadf3a4089a5220ee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4",
+                "sebastian/object-reflector": "^6.0",
+                "sebastian/recursion-context": "^8.0"
+            },
+            "require-dev": {
+                "ext-dom": "*",
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "9.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Snapshotting of global state",
+            "homepage": "https://www.github.com/sebastianbergmann/global-state",
+            "keywords": [
+                "global state"
+            ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/global-state/issues",
+                "security": "https://github.com/sebastianbergmann/global-state/security/policy",
+                "source": "https://github.com/sebastianbergmann/global-state/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/global-state",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T21:47:58+00:00"
+        },
+        {
+            "name": "sebastian/lines-of-code",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/lines-of-code.git",
+                "reference": "f9a15e802af1288d93f0df7102214a80428c26cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/lines-of-code/zipball/f9a15e802af1288d93f0df7102214a80428c26cf",
+                "reference": "f9a15e802af1288d93f0df7102214a80428c26cf",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^5.8.0",
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library for counting the lines of code in PHP source code",
+            "homepage": "https://github.com/sebastianbergmann/lines-of-code",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/lines-of-code/issues",
+                "security": "https://github.com/sebastianbergmann/lines-of-code/security/policy",
+                "source": "https://github.com/sebastianbergmann/lines-of-code/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/lines-of-code",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T23:34:07+00:00"
+        },
+        {
+            "name": "sebastian/object-enumerator",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/object-enumerator.git",
+                "reference": "7f4c4e49b40aeba8608b1e2f714292367e863a28"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/7f4c4e49b40aeba8608b1e2f714292367e863a28",
+                "reference": "7f4c4e49b40aeba8608b1e2f714292367e863a28",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4",
+                "sebastian/object-reflector": "^6.0",
+                "sebastian/recursion-context": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "8.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Traverses array structures and object graphs to enumerate all referenced objects",
+            "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/object-enumerator/issues",
+                "security": "https://github.com/sebastianbergmann/object-enumerator/security/policy",
+                "source": "https://github.com/sebastianbergmann/object-enumerator/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/object-enumerator",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T21:50:29+00:00"
+        },
+        {
+            "name": "sebastian/object-reflector",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/object-reflector.git",
+                "reference": "cce4e78d10f00c2913c0b408abcd152999c97bc7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/cce4e78d10f00c2913c0b408abcd152999c97bc7",
+                "reference": "cce4e78d10f00c2913c0b408abcd152999c97bc7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "6.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Allows reflection of object attributes, including inherited and non-public ones",
+            "homepage": "https://github.com/sebastianbergmann/object-reflector/",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/object-reflector/issues",
+                "security": "https://github.com/sebastianbergmann/object-reflector/security/policy",
+                "source": "https://github.com/sebastianbergmann/object-reflector/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/object-reflector",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T22:59:24+00:00"
+        },
+        {
+            "name": "sebastian/recursion-context",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/recursion-context.git",
+                "reference": "e80a47c4f9d298cc2810d43a6d03c36faa238423"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/e80a47c4f9d298cc2810d43a6d03c36faa238423",
+                "reference": "e80a47c4f9d298cc2810d43a6d03c36faa238423",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "8.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                },
+                {
+                    "name": "Jeff Welch",
+                    "email": "whatthejeff@gmail.com"
+                },
+                {
+                    "name": "Adam Harvey",
+                    "email": "aharvey@php.net"
+                }
+            ],
+            "description": "Provides functionality to recursively process PHP variables",
+            "homepage": "https://github.com/sebastianbergmann/recursion-context",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/recursion-context/issues",
+                "security": "https://github.com/sebastianbergmann/recursion-context/security/policy",
+                "source": "https://github.com/sebastianbergmann/recursion-context/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/recursion-context",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T23:51:17+00:00"
+        },
+        {
+            "name": "sebastian/type",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/type.git",
+                "reference": "6dbc3fd3e788596bb1c2d5440208bb67d3fb6cdf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/6dbc3fd3e788596bb1c2d5440208bb67d3fb6cdf",
+                "reference": "6dbc3fd3e788596bb1c2d5440208bb67d3fb6cdf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "7.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Collection of value objects that represent the types of the PHP type system",
+            "homepage": "https://github.com/sebastianbergmann/type",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/type/issues",
+                "security": "https://github.com/sebastianbergmann/type/security/policy",
+                "source": "https://github.com/sebastianbergmann/type/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/type",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-06T20:30:33+00:00"
+        },
+        {
+            "name": "sebastian/version",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/version.git",
+                "reference": "bce09f605bea2f286401dc0a55db655609ba0c4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/bce09f605bea2f286401dc0a55db655609ba0c4c",
+                "reference": "bce09f605bea2f286401dc0a55db655609ba0c4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "7.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library that helps with managing the version number of Git-hosted PHP projects",
+            "homepage": "https://github.com/sebastianbergmann/version",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/version/issues",
+                "security": "https://github.com/sebastianbergmann/version/security/policy",
+                "source": "https://github.com/sebastianbergmann/version/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/version",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-05T14:27:42+00:00"
+        },
+        {
+            "name": "staabm/side-effects-detector",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staabm/side-effects-detector.git",
+                "reference": "d8334211a140ce329c13726d4a715adbddd0a163"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staabm/side-effects-detector/zipball/d8334211a140ce329c13726d4a715adbddd0a163",
+                "reference": "d8334211a140ce329c13726d4a715adbddd0a163",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.4.3",
+                "phpstan/phpstan": "^1.12.6",
+                "phpunit/phpunit": "^9.6.21",
+                "symfony/var-dumper": "^5.4.43",
+                "tomasvotruba/type-coverage": "1.0.0",
+                "tomasvotruba/unused-public": "1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A static analysis tool to detect side effects in PHP code",
+            "keywords": [
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/staabm/side-effects-detector/issues",
+                "source": "https://github.com/staabm/side-effects-detector/tree/1.0.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/staabm",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-20T05:08:20+00:00"
+        },
+        {
+            "name": "theseer/tokenizer",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/theseer/tokenizer.git",
+                "reference": "7989e43bf381af0eac72e4f0ca5bcbfa81658be4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/7989e43bf381af0eac72e4f0ca5bcbfa81658be4",
+                "reference": "7989e43bf381af0eac72e4f0ca5bcbfa81658be4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": "^8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Arne Blankerts",
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
+            "support": {
+                "issues": "https://github.com/theseer/tokenizer/issues",
+                "source": "https://github.com/theseer/tokenizer/tree/2.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/theseer",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-08T11:19:18+00:00"
         }
     ],
     "aliases": [],

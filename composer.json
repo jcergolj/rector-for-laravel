@@ -6,12 +6,15 @@
     },
     "scripts": {
         "pint": "vendor/bin/pint",
+        "phpunit": "vendor/bin/phpunit",
         "analyse": [
-            "@pint"
+            "@pint",
+            "@phpunit"
         ]
     },
     "require-dev": {
-        "laravel/pint": "^1.9"
+        "laravel/pint": "^1.29",
+        "phpunit/phpunit": "^13.0"
     },
     "license": "MIT",
     "autoload": {
