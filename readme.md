@@ -57,7 +57,7 @@ This is a good option if you want to keep the default setup with no local modifi
 
 ## Included Custom Rules
 
-If you use this package's default `rector.php` config, both custom rules below are enabled.
+If you use this package's default `rector.php` config, all three custom rules below are enabled.
 
 ### AddBlankLineAfterPhpUnitAssertionRector
 
@@ -104,6 +104,41 @@ Invoice::with('customer')->orderBy('created_at', 'desc')->get();
 ```
 
 The rule intentionally skips cases where `query()` is not immediately followed by another method call, and skips non-Eloquent classes that happen to define a `query()` method.
+
+### PhpUnitTestDocblockToAttributeRector
+
+Converts PHPUnit `@test` docblock annotations to the native PHP 8 `#[Test]` attribute.
+
+```php
+use PHPUnit\Framework\TestCase;
+
+class ExampleTest extends TestCase
+{
+    /**
+     * @test
+     */
+    public function user_can_log_in(): void
+    {
+    }
+}
+```
+
+becomes:
+
+```php
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+
+class ExampleTest extends TestCase
+{
+    #[Test]
+    public function user_can_log_in(): void
+    {
+    }
+}
+```
+
+The rule removes the `@test` line, drops the docblock entirely if it becomes empty, preserves unrelated annotations such as `@covers`, and avoids introducing duplicate `#[Test]` attributes.
 
 ---
 
