@@ -140,6 +140,51 @@ class ExampleTest extends TestCase
 
 The rule removes the `@test` line, drops the docblock entirely if it becomes empty, preserves unrelated annotations such as `@covers`, and avoids introducing duplicate `#[Test]` attributes.
 
+## Opt-In Rules
+
+The rule below is intentionally not enabled in this package's default `config/rector.php`.
+
+### RemoveFillableFromUnguardedModelsRector
+
+Removes `$fillable` properties from Eloquent models for projects that intentionally run with unguarded models.
+
+Enable it only if your application relies on `Model::unguard()` or an equivalent base-model convention. If your project depends on per-model mass-assignment allowlists, this rule is not safe to use.
+
+To opt in, add the rule to your published `rector.php` config:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\RemoveFillableFromUnguardedModelsRector;
+
+return RectorConfig::configure()
+    ->withRules([
+        RemoveFillableFromUnguardedModelsRector::class,
+    ]);
+```
+
+Example:
+
+```php
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    protected $fillable = [
+        'name',
+        'email',
+    ];
+}
+```
+
+becomes:
+
+```php
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+}
+```
+
 ---
 
 ## 📄 License
