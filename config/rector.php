@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Jcergolj\RectorForLaravel\CustomRules\AddBlankLineAfterPhpUnitAssertionRector;
 use Jcergolj\RectorForLaravel\CustomRules\ArrowFunctionToClosureRector;
+use Jcergolj\RectorForLaravel\CustomRules\ModelCastsPropertyToCastsMethodRector;
 use Jcergolj\RectorForLaravel\CustomRules\ModelQueryToDirectStaticCallRector;
 use Jcergolj\RectorForLaravel\CustomRules\PhpUnitTestDocblockToAttributeRector;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
@@ -65,6 +66,7 @@ return RectorConfig::configure()
         AddVoidReturnTypeWhereNoReturnRector::class,
         AddBlankLineAfterPhpUnitAssertionRector::class,
         ArrowFunctionToClosureRector::class,
+        ModelCastsPropertyToCastsMethodRector::class,
         ModelQueryToDirectStaticCallRector::class,
         PhpUnitTestDocblockToAttributeRector::class,
         AnonymousMigrationsRector::class,

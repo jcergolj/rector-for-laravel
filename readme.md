@@ -57,7 +57,7 @@ This is a good option if you want to keep the default setup with no local modifi
 
 ## Included Custom Rules
 
-If you use this package's default `rector.php` config, all four custom rules below are enabled.
+If you use this package's default `rector.php` config, all five custom rules below are enabled.
 
 ### AddBlankLineAfterPhpUnitAssertionRector
 
@@ -104,6 +104,39 @@ $names = array_map(function (string $name) use ($prefix): string {
 ```
 
 The rule preserves parameter types, defaults, variadics, references, `static`, declared return types, nested arrows, and arrows used inside fluent chains.
+
+### ModelCastsPropertyToCastsMethodRector
+
+Converts Eloquent `protected $casts = [...]` properties into `protected function casts(): array` methods.
+
+```php
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    protected $casts = [
+        'age' => 'integer',
+    ];
+}
+```
+
+becomes:
+
+```php
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    protected function casts(): array
+    {
+        return [
+            'age' => 'integer',
+        ];
+    }
+}
+```
+
+Enable this only on Laravel versions that support defining model casts via a `casts(): array` method. The rule skips classes that already define `casts()`.
 
 ### ModelQueryToDirectStaticCallRector
 
