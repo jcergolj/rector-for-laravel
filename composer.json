@@ -2,7 +2,7 @@
     "name": "jcergolj/rector-for-laravel",
     "description": "Rector rules for Laravel projects",
     "require": {
-        "driftingly/rector-laravel": "2.*"
+        "driftingly/rector-laravel": "^2.5"
     },
     "scripts": {
         "pint": "vendor/bin/pint",
@@ -13,7 +13,7 @@
         ]
     },
     "require-dev": {
-        "laravel/pint": "^1.29",
+        "laravel/pint": "^1.30",
         "phpunit/phpunit": "^13.0"
     },
     "license": "MIT",
