@@ -185,6 +185,53 @@ class User extends Model
 }
 ```
 
+### RemoveMigrationDownMethodRector
+
+Removes `down()` methods from Laravel migrations for teams that intentionally do not keep migrations reversible.
+
+This rule is opinionated and should only be enabled if your project explicitly treats migrations as forward-only. If your team expects rollback support from individual migration files, do not enable it.
+
+To opt in, add the rule to your published `rector.php` config:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\RemoveMigrationDownMethodRector;
+
+return RectorConfig::configure()
+    ->withRules([
+        RemoveMigrationDownMethodRector::class,
+    ]);
+```
+
+Example:
+
+```php
+use Illuminate\Database\Migrations\Migration;
+
+class CreateUsersTable extends Migration
+{
+    public function up(): void
+    {
+    }
+
+    public function down(): void
+    {
+    }
+}
+```
+
+becomes:
+
+```php
+use Illuminate\Database\Migrations\Migration;
+
+class CreateUsersTable extends Migration
+{
+    public function up(): void
+    {
+    }
+}
+```
+
 ---
 
 ## 📄 License
