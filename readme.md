@@ -55,6 +55,58 @@ This is a good option if you want to keep the default setup with no local modifi
 
 ---
 
+## Included Custom Rules
+
+If you use this package's default `rector.php` config, both custom rules below are enabled.
+
+### AddBlankLineAfterPhpUnitAssertionRector
+
+Adds a blank line around assertions inside PHPUnit test methods so assertion blocks are easier to scan.
+
+```php
+public function test_user_can_log_in(): void
+{
+    $user = User::factory()->create();
+    $this->assertTrue(true);
+    $this->assertSame('John', $user->name);
+}
+```
+
+becomes:
+
+```php
+public function test_user_can_log_in(): void
+{
+    $user = User::factory()->create();
+
+    $this->assertTrue(true);
+
+    $this->assertSame('John', $user->name);
+}
+```
+
+This rule only targets PHPUnit test methods.
+
+### ModelQueryToDirectStaticCallRector
+
+Rewrites fluent Eloquent chains that start with `Model::query()` to the shorter direct static form when the rewrite is safe.
+
+```php
+Invoice::query()->where('status', 'paid')->latest()->first();
+Invoice::query()->with('customer')->orderBy('created_at', 'desc')->get();
+```
+
+becomes:
+
+```php
+Invoice::where('status', 'paid')->latest()->first();
+Invoice::with('customer')->orderBy('created_at', 'desc')->get();
+```
+
+The rule intentionally skips cases where `query()` is not immediately followed by another method call, and skips non-Eloquent classes that happen to define a `query()` method.
+
+---
+
 ## 📄 License
 
 This package is open-sourced software licensed under the [MIT license](LICENSE).
