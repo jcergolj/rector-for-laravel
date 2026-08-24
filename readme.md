@@ -193,7 +193,8 @@ The rule removes the `@test` line, drops the docblock entirely if it becomes emp
 
 ## Opt-In Rules
 
-The rule below is intentionally not enabled in this package's default `config/rector.php`.
+The rules below are intentionally not enabled in this package's default `config/rector.php`.
+The default config includes them as commented-out entries so they are easy to opt into explicitly.
 
 ### RemoveFillableFromUnguardedModelsRector
 

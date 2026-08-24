@@ -95,6 +95,9 @@ return RectorConfig::configure()
         ThrowIfRector::class,
         UseComponentPropertyWithinCommandsRector::class,
         ValidationRuleArrayStringValueToArrayRector::class,
+        // Opt-in rules:
+        // \Jcergolj\RectorForLaravel\CustomRules\RemoveFillableFromUnguardedModelsRector::class,
+        // \Jcergolj\RectorForLaravel\CustomRules\RemoveMigrationDownMethodRector::class,
     ])
     ->withCache(
         cacheClass: FileCacheStorage::class,
