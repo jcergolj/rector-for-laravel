@@ -57,7 +57,7 @@ This is a good option if you want to keep the default setup with no local modifi
 
 ## Included Custom Rules
 
-If you use this package's default `rector.php` config, all three custom rules below are enabled.
+If you use this package's default `rector.php` config, all four custom rules below are enabled.
 
 ### AddBlankLineAfterPhpUnitAssertionRector
 
@@ -86,6 +86,24 @@ public function test_user_can_log_in(): void
 ```
 
 This rule only targets PHPUnit test methods.
+
+### ArrowFunctionToClosureRector
+
+Rewrites PHP arrow functions to equivalent closures with explicit `use (...)` captures.
+
+```php
+$names = array_map(fn (string $name): string => $prefix.$name, $users);
+```
+
+becomes:
+
+```php
+$names = array_map(function (string $name) use ($prefix): string {
+    return $prefix.$name;
+}, $users);
+```
+
+The rule preserves parameter types, defaults, variadics, references, `static`, declared return types, nested arrows, and arrows used inside fluent chains.
 
 ### ModelQueryToDirectStaticCallRector
 
