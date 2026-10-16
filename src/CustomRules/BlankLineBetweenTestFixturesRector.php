@@ -134,7 +134,7 @@ CODE_SAMPLE
             $expr = $expr->var;
         }
 
-        if (! $expr instanceof StaticCall || ! $expr->class instanceof Name
+        if (! $expr instanceof StaticCall || ! $expr->class instanceof Name || ! $expr->name instanceof Identifier
             || ! $this->isName($expr->name, 'factory') || $expr->isFirstClassCallable()) {
             return null;
         }
