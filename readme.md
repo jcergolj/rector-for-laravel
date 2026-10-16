@@ -15,9 +15,15 @@ composer require jcergolj/rector-for-laravel --dev
 This package also depends on:
 
 - [`rector/rector`](https://github.com/rectorphp/rector)
-- [`rector/laravel`](https://github.com/rectorphp/rector-laravel)
+- [`driftingly/rector-laravel`](https://github.com/driftingly/rector-laravel)
 
 These will be pulled in automatically if not already installed.
+
+`driftingly/rector-laravel` 2.6.2 requires the abandoned
+`symplify/rule-doc-generator-contracts` package, so Composer may print an abandonment
+warning. It does not prevent installation. There is no suggested replacement; removing
+it requires a change in the upstream Laravel Rector dependency, not simply deleting
+it from this package's dependencies.
 
 ---
 
@@ -195,6 +201,95 @@ The rule removes the `@test` line, drops the docblock entirely if it becomes emp
 
 The rules below are intentionally not enabled in this package's default `config/rector.php`.
 The default config includes them as commented-out entries so they are easy to opt into explicitly.
+
+### BlankLineBetweenTestFixturesRector
+
+Adds a blank line between adjacent Laravel factory fixture assignments in PHPUnit
+test methods and `setUp()`, including tests extending your application's `Tests\TestCase`.
+
+```php
+$buyer = User::factory()->create();
+$firstToken = Token::factory()->for($buyer, 'buyer')->create();
+$secondToken = Token::factory()->for($buyer, 'buyer')->create();
+```
+
+becomes:
+
+```php
+$buyer = User::factory()->create();
+
+$firstToken = Token::factory()->for($buyer, 'buyer')->create();
+
+$secondToken = Token::factory()->for($buyer, 'buyer')->create();
+```
+
+The supported boundary is deliberately syntactic: both statements must be standalone
+`=` assignments to different named local variables or `$this->namedProperty`, with
+right-hand sides rooted in a named `Class::factory()` call, optionally followed by
+fluent method calls. Multiline calls and leading comments are supported; existing
+blank lines are preserved. No model type inference or Arrange-phase guessing is used.
+
+Arbitrary assignments, repeated assignments to the same target, dynamic calls/targets,
+references, destructuring, nested blocks/closures, traits, providers and helpers are
+left alone. Pairs with a trailing inline comment on the first statement are also
+left alone so the parser/printer cannot detach the comment from its original line.
+
+### MiddlewareTestsFirstRector
+
+Groups middleware-wiring tests before other PHPUnit tests, preserving order within
+each group. It recognizes direct `assertMiddlewareIsApplied()` calls, not method
+names. Calls inside closures or nested classes, and first-class callable references,
+do not identify a middleware test.
+
+```php
+public function test_can_view_tokens(): void
+{
+    $this->get('/tokens')->assertOk();
+}
+
+public function test_auth_is_applied(): void
+{
+    $this->get('/tokens')->assertMiddlewareIsApplied('auth');
+}
+```
+
+becomes:
+
+```php
+public function test_auth_is_applied(): void
+{
+    $this->get('/tokens')->assertMiddlewareIsApplied('auth');
+}
+
+public function test_can_view_tokens(): void
+{
+    $this->get('/tokens')->assertOk();
+}
+```
+
+Only test-method slots are reordered, so properties, setup methods, helpers and
+providers stay in place. Attributes, docblocks, associated leading comments, method
+bodies and data-provider references move with their tests. Non-test classes are
+unchanged. The rule does not add or remove middleware coverage. Run Pint afterward
+to normalize method separators if needed.
+
+To enable either or both test rules, add them to your `rector.php`:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenTestFixturesRector;
+use Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withRules([
+        BlankLineBetweenTestFixturesRector::class,
+        MiddlewareTestsFirstRector::class,
+    ]);
+```
+
+Both rules are idempotent. Fixture spacing is compatible with the existing assertion
+spacing rule and `NewlineBeforeNewAssignSetRector`; Pint's default Laravel preset
+preserves blank lines between these assignments.
 
 ### RemoveFillableFromUnguardedModelsRector
 
