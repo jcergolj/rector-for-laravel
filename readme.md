@@ -239,7 +239,7 @@ left alone so the parser/printer cannot detach the comment from its original lin
 Groups middleware-wiring tests before other PHPUnit tests, preserving order within
 each group. It recognizes direct `assertMiddlewareIsApplied()` calls, not method
 names. Calls inside closures or nested classes, and first-class callable references,
-do not identify a middleware test.
+do not identify a middleware test. Dynamic method names are ignored.
 
 ```php
 public function test_can_view_tokens(): void
@@ -270,7 +270,8 @@ public function test_can_view_tokens(): void
 Only test-method slots are reordered, so properties, setup methods, helpers and
 providers stay in place. Attributes, docblocks, associated leading comments, method
 bodies and data-provider references move with their tests. Non-test classes are
-unchanged. The rule does not add or remove middleware coverage. Run Pint afterward
+unchanged. Classes with trailing inline member comments are skipped to preserve
+comment ownership. The rule does not add or remove middleware coverage. Run Pint afterward
 to normalize method separators if needed.
 
 To enable either or both test rules, add them to your `rector.php`:

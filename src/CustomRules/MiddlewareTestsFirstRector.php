@@ -7,6 +7,7 @@ namespace Jcergolj\RectorForLaravel\CustomRules;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use Rector\PhpParser\Node\BetterNodeFinder;
@@ -64,7 +65,7 @@ CODE_SAMPLE
      */
     public function refactor(Node $node): ?Node
     {
-        if (! $this->testsNodeAnalyzer->isInTestClass($node)) {
+        if (! $this->testsNodeAnalyzer->isInTestClass($node) || $this->hasTrailingMemberComment($node)) {
             return null;
         }
 
@@ -107,9 +108,30 @@ CODE_SAMPLE
             $classMethod,
             function (Node $node): bool {
                 return ($node instanceof MethodCall || $node instanceof StaticCall)
+                    && $node->name instanceof Identifier
                     && $this->isName($node->name, 'assertMiddlewareIsApplied')
                     && ! $node->isFirstClassCallable();
             }
         ) !== null;
+    }
+
+    private function hasTrailingMemberComment(Class_ $class): bool
+    {
+        $previousStmt = null;
+
+        foreach ($class->stmts as $stmt) {
+            $comments = $stmt->getComments();
+
+            // PHP-Parser attaches a member's trailing comment to the following member/Nop.
+            // Leave the class intact rather than move that comment to the wrong test.
+            if ($previousStmt !== null && $comments !== []
+                && $comments[0]->getStartLine() <= $previousStmt->getEndLine()) {
+                return true;
+            }
+
+            $previousStmt = $stmt;
+        }
+
+        return false;
     }
 }
