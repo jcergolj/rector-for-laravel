@@ -274,10 +274,41 @@ unchanged. Classes with trailing inline member comments are skipped to preserve
 comment ownership. The rule does not add or remove middleware coverage. Run Pint afterward
 to normalize method separators if needed.
 
-To enable either or both test rules, add them to your `rector.php`:
+### DataProviderBeforeTestRector
+
+Places each local PHPUnit data provider immediately above the first test that uses
+it, so the input cases can be read before the test body. Shared providers appear
+only once, above their first consuming test. Multiple providers are ordered by
+their references on that test.
+
+```php
+public static function values(): array
+{
+    return [['value']];
+}
+
+#[\PHPUnit\Framework\Attributes\DataProvider('values')]
+public function test_value(string $value): void
+{
+    $this->assertSame('value', $value);
+}
+```
+
+Supports PHPUnit `#[DataProvider('method')]` attributes (including aliases and
+named `methodName` arguments) and legacy `@dataProvider method` annotations.
+Only providers declared in the same test class move; inherited, external and
+non-literal references are left alone. Unused providers, non-test classes and
+traits are unchanged. Attributes, docblocks and leading comments stay with their
+methods. Classes with trailing inline member comments are skipped to preserve
+comment ownership. Run Pint afterward to normalize method separators if needed.
+
+The rule is idempotent and can be combined with `MiddlewareTestsFirstRector`.
+
+To enable any of these test rules, add them to your `rector.php`:
 
 ```php
 use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenTestFixturesRector;
+use Jcergolj\RectorForLaravel\CustomRules\DataProviderBeforeTestRector;
 use Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector;
 use Rector\Config\RectorConfig;
 
@@ -285,10 +316,11 @@ return RectorConfig::configure()
     ->withRules([
         BlankLineBetweenTestFixturesRector::class,
         MiddlewareTestsFirstRector::class,
+        DataProviderBeforeTestRector::class,
     ]);
 ```
 
-Both rules are idempotent. Fixture spacing is compatible with the existing assertion
+These rules are idempotent. Fixture spacing is compatible with the existing assertion
 spacing rule and `NewlineBeforeNewAssignSetRector`; Pint's default Laravel preset
 preserves blank lines between these assignments.
 

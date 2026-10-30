@@ -98,6 +98,7 @@ return RectorConfig::configure()
         // Opt-in rules:
         // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenTestFixturesRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector::class,
+        // \Jcergolj\RectorForLaravel\CustomRules\DataProviderBeforeTestRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\RemoveFillableFromUnguardedModelsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\RemoveMigrationDownMethodRector::class,
     ])

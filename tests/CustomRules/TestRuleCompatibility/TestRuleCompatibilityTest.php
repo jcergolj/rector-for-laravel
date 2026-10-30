@@ -20,6 +20,23 @@ class TestRuleCompatibilityTest extends AbstractRectorTestCase
         return self::yieldFilesFromDirectory(__DIR__.'/Fixture');
     }
 
+    #[DataProvider('provideData')]
+    public function test_output_is_unchanged_on_a_second_run(string $filePath): void
+    {
+        $parts = explode("\n-----\n", file_get_contents($filePath), 2);
+        $temporaryFile = tempnam(sys_get_temp_dir(), 'rector-compatibility-');
+        $this->assertNotFalse($temporaryFile);
+        $fixture = $temporaryFile.'.php.inc';
+
+        try {
+            file_put_contents($fixture, $parts[1] ?? $parts[0]);
+            $this->doTestFile($fixture);
+        } finally {
+            unlink($fixture);
+            unlink($temporaryFile);
+        }
+    }
+
     public function provideConfigFilePath(): string
     {
         return __DIR__.'/config/configured_rule.php';
