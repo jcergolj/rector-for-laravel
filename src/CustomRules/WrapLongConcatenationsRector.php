@@ -63,7 +63,7 @@ final class WrapLongConcatenationsRector extends AbstractRector implements Confi
         }
 
         // Skipped-rule probes share token objects with the real file.
-        if (method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
+        if (isset($this->skipper) && method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
             return $node;
         }
 
@@ -80,6 +80,9 @@ final class WrapLongConcatenationsRector extends AbstractRector implements Confi
         }
         $indent = str_replace("\t", '    ', substr($prefix, 0, strspn($prefix, " \t"))).'    ';
         foreach ($this->operatorPositions($node) as $position) {
+            if (str_contains($tokens[$position]->text, "\n")) {
+                continue;
+            }
             $tokens[$position]->text = $newline.$indent.$tokens[$position]->text;
             while ($position > 0 && $tokens[--$position]->id === T_WHITESPACE) {
                 $tokens[$position]->text = '';

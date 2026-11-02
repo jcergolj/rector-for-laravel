@@ -19,7 +19,11 @@ This package also depends on:
 
 These will be pulled in automatically if not already installed.
 
-`driftingly/rector-laravel` 2.6.2 requires the abandoned
+Requires PHP 8.3 or newer through `driftingly/rector-laravel` 2.7.
+Running this package's PHPUnit development suite requires PHP 8.4.1 or newer.
+Dependencies use stable releases by default.
+
+`driftingly/rector-laravel` 2.7.3 requires the abandoned
 `symplify/rule-doc-generator-contracts` package, so Composer may print an abandonment
 warning. It does not prevent installation. There is no suggested replacement; removing
 it requires a change in the upstream Laravel Rector dependency, not simply deleting

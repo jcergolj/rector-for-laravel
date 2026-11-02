@@ -2,7 +2,7 @@
     "name": "jcergolj/rector-for-laravel",
     "description": "Rector rules for Laravel projects",
     "require": {
-        "driftingly/rector-laravel": "^2.5"
+        "driftingly/rector-laravel": "^2.7"
     },
     "scripts": {
         "pint": "vendor/bin/pint",
@@ -13,8 +13,8 @@
         ]
     },
     "require-dev": {
-        "laravel/pint": "^1.30",
-        "phpunit/phpunit": "^13.0"
+        "laravel/pint": "^1.32",
+        "phpunit/phpunit": "^13.4"
     },
     "license": "MIT",
     "autoload": {
@@ -27,7 +27,7 @@
             "name": "Janez Cergolj"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [

@@ -59,7 +59,7 @@ final class WrapLongArraysRector extends AbstractRector implements ConfigurableR
         }
 
         // Rector probes skipped rules on a clone. Do not mutate shared printer tokens in a probe.
-        if (method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
+        if (isset($this->skipper) && method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
             return $node;
         }
 
@@ -87,6 +87,11 @@ final class WrapLongArraysRector extends AbstractRector implements ConfigurableR
                     }
                     $open--;
                 } while ($open > $list->getStartTokenPos());
+            }
+
+            // Rector 2.8 revisits the same AST and tokens until printing is stable.
+            if (str_contains($tokens[$open]->text, "\n")) {
+                continue;
             }
 
             $line = $lines[$list->getStartLine() - 1];

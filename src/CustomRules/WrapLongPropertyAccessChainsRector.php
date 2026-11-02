@@ -81,7 +81,7 @@ final class WrapLongPropertyAccessChainsRector extends AbstractRector implements
             return null;
         }
         // Skipped-rule probes share token objects with the real file.
-        if (method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
+        if (isset($this->skipper) && method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
             return $node;
         }
 

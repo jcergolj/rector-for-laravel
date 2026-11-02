@@ -96,8 +96,8 @@ final class WrapLongParameterListsRector extends AbstractRector implements Confi
             return null;
         }
 
-        // Skipped-rule probes share token objects with the real file.
-        if (method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
+        // Before Rector 2.8, skipped-rule probes shared token objects with the real file.
+        if (isset($this->skipper) && method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
             return $node;
         }
 
