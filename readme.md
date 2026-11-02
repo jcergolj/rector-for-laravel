@@ -309,6 +309,41 @@ This is a readability convention, not a hard line-length limit or a guarantee th
 every resulting line fits within 120 characters. Long indivisible arguments remain
 unchanged; the rule does not split strings or introduce temporary variables.
 
+### WrapLongPropertyAccessChainsRector
+
+Wraps inline property-access chains on lines exceeding a configurable soft target
+(120 characters by default, including indentation):
+
+```php
+$this->payload['section_1_question_1'] = $this->completedQuestionnaire
+    ->sectionQuestions
+    ->sectionOne
+    ->questionOne;
+```
+
+Enable it explicitly with `withRules([WrapLongPropertyAccessChainsRector::class])`,
+importing `Jcergolj\RectorForLaravel\CustomRules\WrapLongPropertyAccessChainsRector`.
+To change the target, use:
+
+```php
+->withConfiguredRule(WrapLongPropertyAccessChainsRector::class, [
+    WrapLongPropertyAccessChainsRector::MAX_LINE_LENGTH => 100,
+])
+```
+
+The target must be a positive integer. Exactly-at-target lines, single property
+fetches, dynamic property names and existing multiline chains are unchanged. The
+first property stays beside its receiver; subsequent named property fetches each
+receive a continuation line. Normal and nullsafe operators, evaluation order,
+comments and literal values are preserved through syntax-guided token edits.
+Unicode characters count as one character and tabs as four columns.
+
+Nested expressions and composition with array, enclosing argument and fluent-chain
+wrapping are tested in both rule orders. The installed Rector printer and Pint
+preserve this layout; the second `Rector → Pint → Rector → Pint` cycle makes no
+changes. This rule is opt-in, does not introduce variables or split literals, and
+does not guarantee every resulting line fits the soft target.
+
 ### WrapLongConcatenationsRector
 
 Wraps existing inline concatenations on lines exceeding a configurable soft target
