@@ -309,6 +309,50 @@ This is a readability convention, not a hard line-length limit or a guarantee th
 every resulting line fits within 120 characters. Long indivisible arguments remain
 unchanged; the rule does not split strings or introduce temporary variables.
 
+### WrapLongBooleanConditionsRector
+
+Wraps inline `if`, `elseif`, `while`, and `do/while` conditions rooted in `||` or
+`&&` on lines exceeding a configurable soft target (default: 120 characters,
+including indentation). Operators stay at the end of continued condition lines;
+the final operand has no trailing operator:
+
+```php
+if (
+    $request->routeIs('licence-agreement.create') ||
+    $request->routeIs('licence-agreement.store') ||
+    $request->routeIs('download-licence-agreement')
+) {
+    // Existing body unchanged.
+}
+```
+
+Enable it explicitly in your `rector.php`:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(WrapLongBooleanConditionsRector::class, [
+        WrapLongBooleanConditionsRector::MAX_LINE_LENGTH => 120,
+    ]);
+```
+
+Alternatively, use `withRules()` for the default target. The target must be a
+positive integer. This rule is **not enabled in the published default config**.
+Exactly-at-target lines and existing multiline conditions are unchanged. Unicode
+characters count as one character; tabs count as four columns.
+
+Syntax-guided token edits preserve parentheses, precedence, short-circuiting,
+comments, and literal values without extracting variables. Nested boolean groups
+and nested statements are supported. Keyword operators (`and`, `or`, `xor`),
+`for` headers, and boolean expressions outside these condition headers are left
+alone. Indivisible operands may still exceed the soft target.
+
+Run Pint afterward to normalize nested indentation. Tests verify stable
+`Rector → Pint → Rector → Pint` cycles, including composition with array, enclosing
+argument, and fluent-chain wrapping. This is an optional readability convention,
+not a hard line-length limit or a PSR-12 requirement.
+
 ### BlankLineBetweenTestFixturesRector
 
 Adds a blank line between adjacent Laravel factory fixture assignments in PHPUnit
