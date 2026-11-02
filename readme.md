@@ -258,6 +258,54 @@ PSR-12 requirement to wrap every long line. Indivisible strings, URLs, regexes,
 heredocs and other unsupported syntax are not split. General call/parameter/chain
 wrapping, PHPDoc, Blade, HTML, JavaScript and CSS are outside this rule's scope.
 
+### WrapLongFluentChainsRector
+
+Wraps inline fluent call chains on lines exceeding a configurable **soft target**
+(default: 120 characters, including indentation). Exactly 120 characters is unchanged.
+Unicode characters count as one character; tabs count as four columns.
+
+```php
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:5,10')->name('password.update');
+```
+
+becomes:
+
+```php
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])
+    ->middleware('throttle:5,10')
+    ->name('password.update');
+```
+
+To opt in, add the rule to your `rector.php`:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongFluentChainsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(WrapLongFluentChainsRector::class, [
+        WrapLongFluentChainsRector::MAX_LINE_LENGTH => 120,
+    ]);
+```
+
+The target must be a positive integer. Alternatively, enable it with `withRules()`
+to use the default target. It is **not enabled in the published default config**.
+
+Supports method and nullsafe method continuations after static calls, function
+calls, constructors, or another method call. The first call stays on the original
+line; continuations receive one indentation level. Evaluation order, nullsafe
+operators, comments, arguments, and literal values are preserved. Nested inline
+chains in arguments and arrays are supported without expanding their argument lists.
+
+Short lines, single calls, property-only chains, first-class callable chains, and
+already-multiline chains (including multiline arguments) are left alone. Run Pint
+after Rector to normalize indentation in nested expressions. Repeating
+`Rector → Pint → Rector → Pint` leaves the second cycle unchanged.
+
+This is a readability convention, not a hard line-length limit or a guarantee that
+every resulting line fits within 120 characters. Long indivisible arguments remain
+unchanged; the rule does not split strings or introduce temporary variables.
+
 
 ### BlankLineBetweenTestFixturesRector
 
