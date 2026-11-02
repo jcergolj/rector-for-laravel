@@ -305,6 +305,50 @@ array, fluent-chain, boolean and concatenation wrapping is tested in both rule o
 Run Pint afterward; repeating `Rector → Pint → Rector → Pint` leaves the second
 cycle unchanged.
 
+### WrapLongParameterListsRector
+
+Wraps long inline method, function, closure and arrow-function parameter lists
+with one parameter per line, including promoted constructor parameters:
+
+```php
+public function __construct(
+    public readonly Team $team,
+    public readonly array $pages,
+    public readonly ?User $user = null,
+    public readonly array $metadata = [],
+) {}
+```
+
+Enable it explicitly in your `rector.php`:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongParameterListsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(WrapLongParameterListsRector::class, [
+        WrapLongParameterListsRector::MAX_LINE_LENGTH => 120,
+    ]);
+```
+
+`withRules()` uses the default soft target of 120. The target must be a positive
+integer. Length includes indentation through the closing parameter parenthesis;
+exactly-at-target signatures are unchanged. Unicode characters count as one and
+tabs as four columns. A long return type, closure capture or body alone does not
+trigger parameter wrapping. This rule is **not enabled in the published default config**.
+
+Promotion, attributes, types, defaults, references, variadics, comments and literal
+bytes are preserved using syntax-guided token edits. Wrapped lists receive a trailing
+comma. Empty, single-parameter and already-multiline lists are unchanged, including
+lists made multiline by array wrapping. Indivisible identifiers and strings are
+never split or renamed, and resulting lines may still exceed the soft target.
+Files containing `__LINE__` are skipped because adding lines could change its value.
+
+Composition with array, call-argument and fluent-chain wrapping is tested in both
+registration orders. Run Pint afterward; repeating `Rector → Pint → Rector → Pint`
+leaves the second cycle unchanged. This is an optional readability convention,
+not a hard line-length limit or a PSR-12 requirement.
+
 ### WrapLongFluentChainsRector
 
 Wraps inline fluent call chains on lines exceeding a configurable **soft target**

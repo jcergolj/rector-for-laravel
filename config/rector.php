@@ -96,6 +96,7 @@ return RectorConfig::configure()
         UseComponentPropertyWithinCommandsRector::class,
         ValidationRuleArrayStringValueToArrayRector::class,
         // Opt-in rules:
+        // \Jcergolj\RectorForLaravel\CustomRules\WrapLongParameterListsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongCallArgumentsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongPropertyAccessChainsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector::class,
