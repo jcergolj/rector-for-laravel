@@ -96,6 +96,7 @@ return RectorConfig::configure()
         UseComponentPropertyWithinCommandsRector::class,
         ValidationRuleArrayStringValueToArrayRector::class,
         // Opt-in rules:
+        // \Jcergolj\RectorForLaravel\CustomRules\WrapLongArraysRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenTestFixturesRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\DataProviderBeforeTestRector::class,

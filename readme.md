@@ -202,6 +202,63 @@ The rule removes the `@test` line, drops the docblock entirely if it becomes emp
 The rules below are intentionally not enabled in this package's default `config/rector.php`.
 The default config includes them as commented-out entries so they are easy to opt into explicitly.
 
+### WrapLongArraysRector
+
+Wraps inline arrays with multiple items on lines exceeding a configurable soft
+target (120 characters by default, including indentation). Nested arrays are
+expanded too. Enclosing multi-argument calls are expanded to one argument per line
+when an array inside their arguments is wrapped:
+
+```php
+$token = Token::factory()->for(User::factory()->create(['email' => 'joe.doe@example.com', 'first_name' => 'joe', 'last_name' => 'doe']), 'buyer');
+```
+
+becomes:
+
+```php
+$token = Token::factory()->for(
+    User::factory()->create([
+        'email' => 'joe.doe@example.com',
+        'first_name' => 'joe',
+        'last_name' => 'doe',
+    ]),
+    'buyer',
+);
+```
+
+Enable it explicitly in your `rector.php`:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongArraysRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withRules([
+        WrapLongArraysRector::class,
+    ]);
+```
+
+To change the soft target, replace `withRules()` with:
+
+```php
+->withConfiguredRule(WrapLongArraysRector::class, [
+    WrapLongArraysRector::MAX_LINE_LENGTH => 100,
+])
+```
+
+Exactly-at-target lines, existing multiline layouts, empty arrays and single-item
+arrays are left unchanged. Length counts Unicode characters, with tabs counted as
+four spaces. Keys, order, unpacking, references, comments and literal values are
+preserved using syntax-guided token edits and Rector's format-preserving printer.
+Both `[]` and `array()` syntax are supported. Run Pint afterward for normal project
+styling; repeated Rector/Pint cycles are stable.
+
+This is an optional readability convention, not a hard line-length limit or a
+PSR-12 requirement to wrap every long line. Indivisible strings, URLs, regexes,
+heredocs and other unsupported syntax are not split. General call/parameter/chain
+wrapping, PHPDoc, Blade, HTML, JavaScript and CSS are outside this rule's scope.
+
+
 ### BlankLineBetweenTestFixturesRector
 
 Adds a blank line between adjacent Laravel factory fixture assignments in PHPUnit
