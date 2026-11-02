@@ -13,7 +13,8 @@ class WrapLongFluentChainsWorkflowTest extends TestCase
     #[DataProvider('provideFixtures')]
     public function test_rector_and_pint_are_stable(string $fixture, string $config): void
     {
-        $source = explode("\n-----\n", file_get_contents($fixture), 2)[0];
+        $parts = explode("\n-----\n", file_get_contents($fixture), 2);
+        $source = $parts[0].(isset($parts[1]) ? "\n" : '');
         $file = tempnam('/tmp/opencode', 'chains-workflow-');
         $path = $file.'.php';
         $root = dirname(__DIR__, 3);
@@ -23,6 +24,9 @@ class WrapLongFluentChainsWorkflowTest extends TestCase
             $rector = [PHP_BINARY, $root.'/vendor/bin/rector', 'process', $path, '--config='.$config, '--no-progress-bar', '--no-ansi', '--clear-cache'];
             $pint = [PHP_BINARY, $root.'/vendor/bin/pint', $path, '--no-ansi'];
             $this->runCommand($rector);
+            if (str_contains($fixture, '/CompositionFixture/')) {
+                $this->assertSame($parts[1], file_get_contents($path));
+            }
             $ignoreCommas = basename($config) !== 'configured_rule.php';
             $this->assertSame($this->meaningfulTokens($source, $ignoreCommas), $this->meaningfulTokens(file_get_contents($path), $ignoreCommas));
             $this->runCommand([PHP_BINARY, '-l', $path]);
@@ -48,6 +52,10 @@ class WrapLongFluentChainsWorkflowTest extends TestCase
         foreach (['arrays_first', 'chains_first'] as $order) {
             foreach (['route', 'arrays_and_arguments', 'factory_chain'] as $fixture) {
                 yield $order.'/'.$fixture => [__DIR__.'/Fixture/'.$fixture.'.php.inc', __DIR__.'/config/'.$order.'.php'];
+            }
+
+            foreach (glob(__DIR__.'/CompositionFixture/*.php.inc') as $fixture) {
+                yield $order.'/composition/'.basename($fixture) => [$fixture, __DIR__.'/config/'.$order.'.php'];
             }
         }
     }

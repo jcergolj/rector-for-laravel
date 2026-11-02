@@ -296,6 +296,9 @@ calls, constructors, or another method call. The first call stays on the origina
 line; continuations receive one indentation level. Evaluation order, nullsafe
 operators, comments, arguments, and literal values are preserved. Nested inline
 chains in arguments and arrays are supported without expanding their argument lists.
+When combined with `WrapLongArraysRector`, array and argument expansion can happen
+in the same pass as chain wrapping, with nested indentation preserved. Composition
+is tested with either rule registration order.
 
 Short lines, single calls, property-only chains, first-class callable chains, and
 already-multiline chains (including multiline arguments) are left alone. Run Pint
@@ -305,7 +308,6 @@ after Rector to normalize indentation in nested expressions. Repeating
 This is a readability convention, not a hard line-length limit or a guarantee that
 every resulting line fits within 120 characters. Long indivisible arguments remain
 unchanged; the rule does not split strings or introduce temporary variables.
-
 
 ### BlankLineBetweenTestFixturesRector
 

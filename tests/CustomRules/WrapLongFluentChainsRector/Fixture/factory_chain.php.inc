@@ -6,6 +6,6 @@ $token = Token::factory()->for(User::factory()->create(['email' => 'joe.doe@exam
 
 $token = Token::factory()
     ->for(User::factory()
-    ->create(['email' => 'joe.doe@example.com', 'first_name' => 'joe', 'last_name' => 'doe']), 'buyer')
+        ->create(['email' => 'joe.doe@example.com', 'first_name' => 'joe', 'last_name' => 'doe']), 'buyer')
     ->withNotifications()
     ->create();

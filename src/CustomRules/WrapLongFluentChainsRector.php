@@ -39,6 +39,7 @@ final class WrapLongFluentChainsRector extends AbstractRector implements Configu
         ]);
     }
 
+    /** @return array<class-string<Node>> */
     public function getNodeTypes(): array
     {
         return [MethodCall::class, NullsafeMethodCall::class];
@@ -73,8 +74,13 @@ final class WrapLongFluentChainsRector extends AbstractRector implements Configu
 
         $tokens = $this->getFile()->getOldTokens();
         $newline = str_contains($this->getFile()->getOriginalFileContent(), "\r\n") ? "\r\n" : "\n";
-        foreach ($breaks as $position => $indent) {
+        foreach ($breaks as $position => [$indent, $argumentStart, $argumentEnd]) {
             $tokens[$position]->text = $newline.$indent.$tokens[$position]->text;
+            // Array wrapping may already have introduced multiline arguments in
+            // this originally inline call. Move those lines with the continuation.
+            for ($argument = $argumentStart; $argument <= $argumentEnd; $argument++) {
+                $tokens[$argument]->text = str_replace("\n", "\n    ", $tokens[$argument]->text);
+            }
             while ($position > 0 && $tokens[--$position]->id === T_WHITESPACE) {
                 $tokens[$position]->text = '';
             }
@@ -85,7 +91,7 @@ final class WrapLongFluentChainsRector extends AbstractRector implements Configu
 
     /**
      * @param  array<int, string>  $lines
-     * @param  array<int, string>  $breaks
+     * @param  array<int, array{string, int, int}>  $breaks
      */
     private function collectChain(MethodCall|NullsafeMethodCall $chain, array $lines, array &$breaks): void
     {
@@ -96,15 +102,6 @@ final class WrapLongFluentChainsRector extends AbstractRector implements Configu
         $line = str_replace("\t", '    ', rtrim($lines[$chain->getStartLine() - 1], "\r"));
         if (mb_strlen($line) <= $this->maxLineLength) {
             return;
-        }
-
-        // An enclosing chain or another formatting rule may already have wrapped
-        // these shared tokens without changing the original AST line numbers.
-        $tokens = $this->getFile()->getOldTokens();
-        for ($position = $chain->getStartTokenPos(); $position <= $chain->getEndTokenPos(); $position++) {
-            if (str_contains($tokens[$position]->text, "\n")) {
-                return;
-            }
         }
 
         $calls = [];
@@ -128,12 +125,24 @@ final class WrapLongFluentChainsRector extends AbstractRector implements Configu
             return;
         }
 
-        $indent = substr($line, 0, strspn($line, ' ')).'    ';
         $tokens = $this->getFile()->getOldTokens();
+        // Read the current token layout: an enclosing array/call/chain may have
+        // added indentation since the AST's original line numbers were recorded.
+        $prefix = '';
+        for ($position = $chain->getStartTokenPos() - 1; $position >= 0; $position--) {
+            $prefix = $tokens[$position]->text.$prefix;
+            if (str_contains($prefix, "\n")) {
+                $prefix = substr($prefix, strrpos($prefix, "\n") + 1);
+                break;
+            }
+        }
+        $indent = str_replace("\t", '    ', substr($prefix, 0, strspn($prefix, " \t"))).'    ';
         foreach ($calls as $method) {
             for ($position = $method->var->getEndTokenPos() + 1; $position < $method->name->getStartTokenPos(); $position++) {
                 if (in_array($tokens[$position]->id, [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR], true)) {
-                    $breaks[$position] = $indent;
+                    if (! str_contains($tokens[$position]->text, "\n")) {
+                        $breaks[$position] = [$indent, $method->name->getEndTokenPos() + 1, $method->getEndTokenPos()];
+                    }
                     break;
                 }
             }
