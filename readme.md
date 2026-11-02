@@ -258,6 +258,53 @@ PSR-12 requirement to wrap every long line. Indivisible strings, URLs, regexes,
 heredocs and other unsupported syntax are not split. General call/parameter/chain
 wrapping, PHPDoc, Blade, HTML, JavaScript and CSS are outside this rule's scope.
 
+### WrapLongCallArgumentsRector
+
+Wraps inline argument lists of function, method, nullsafe method and static calls,
+and named-class or dynamic-class constructors, with one argument per line:
+
+```php
+$this->assertSame(
+    $this->completedQuestionnaire->sectionQuestions->sectionOne->questionOne,
+    $apiRequestParams['section_1_question_1'],
+);
+```
+
+Enable it explicitly in your `rector.php`:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongCallArgumentsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(WrapLongCallArgumentsRector::class, [
+        WrapLongCallArgumentsRector::MAX_LINE_LENGTH => 120,
+    ]);
+```
+
+The soft target defaults to 120 characters including indentation; `withRules()`
+uses this default. The target must be a positive integer. Exactly-at-target lines
+are unchanged, Unicode characters count as one and tabs count as four columns.
+This rule is **not enabled in the published default config**.
+
+Named arguments, unpacking, references, comments, evaluation order, and string
+bytes are preserved through syntax-guided token edits. Trailing commas are added
+to wrapped lists. Dynamic callables and inline lists following multiline receivers
+are supported. Nested calls are considered using the current layout, avoiding
+unnecessary expansion of short nested calls after an outer list has been wrapped.
+
+Empty and single-argument lists, existing multiline lists, first-class callable
+references and anonymous-class constructors are left alone. Strings, interpolated
+strings, URLs, regexes, heredocs and nowdocs are not split. Long indivisible
+arguments may still exceed the target; this is not a hard line-length limit.
+
+Enable `WrapLongArraysRector` separately to expand arrays too. Multi-argument calls
+containing an array that needs wrapping get an expanded outer argument list even
+when array expansion alone would bring the lines under the target. Composition with
+array, fluent-chain, boolean and concatenation wrapping is tested in both rule orders.
+Run Pint afterward; repeating `Rector → Pint → Rector → Pint` leaves the second
+cycle unchanged.
+
 ### WrapLongFluentChainsRector
 
 Wraps inline fluent call chains on lines exceeding a configurable **soft target**
