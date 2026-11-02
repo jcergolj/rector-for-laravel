@@ -29,10 +29,10 @@ final class WrapLongConcatenationsRector extends AbstractRector implements Confi
 
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Wrap existing long concatenations with leading continuation dots', [
+        return new RuleDefinition('Wrap existing long concatenations with trailing continuation dots', [
             new CodeSample(
                 "\$attribute = trans('validation.attributes.email').trans('dashboard.on_the').trans('allocated-tokens.create.step_1').trans('dashboard.tab');",
-                "\$attribute = trans('validation.attributes.email')\n    .trans('dashboard.on_the')\n    .trans('allocated-tokens.create.step_1')\n    .trans('dashboard.tab');",
+                "\$attribute = trans('validation.attributes.email').\n    trans('dashboard.on_the').\n    trans('allocated-tokens.create.step_1').\n    trans('dashboard.tab');",
             ),
         ]);
     }
@@ -83,7 +83,10 @@ final class WrapLongConcatenationsRector extends AbstractRector implements Confi
             if (str_contains($tokens[$position]->text, "\n")) {
                 continue;
             }
-            $tokens[$position]->text = $newline.$indent.$tokens[$position]->text;
+            $tokens[$position]->text .= $newline.$indent;
+            for ($next = $position + 1; isset($tokens[$next]) && $tokens[$next]->id === T_WHITESPACE; $next++) {
+                $tokens[$next]->text = '';
+            }
             while ($position > 0 && $tokens[--$position]->id === T_WHITESPACE) {
                 $tokens[$position]->text = '';
             }

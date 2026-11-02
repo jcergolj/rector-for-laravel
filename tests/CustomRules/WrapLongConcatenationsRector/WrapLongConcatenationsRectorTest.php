@@ -44,7 +44,7 @@ class WrapLongConcatenationsRectorTest extends AbstractRectorTestCase
         $line = sprintf($template, str_repeat($character, $padding));
         $source = "<?php\n\n".$line."\n";
         $expected = $length > 120
-            ? "<?php\n\n".str_replace('.suffix()', "\n".str_replace("\t", '    ', $indent).'    .suffix()', $line)."\n"
+            ? "<?php\n\n".str_replace('.suffix()', ".\n".str_replace("\t", '    ', $indent).'    suffix()', $line)."\n"
             : $source;
         $file = tempnam('/tmp/opencode', 'concat-boundary-');
         $fixture = $file.'.php.inc';

@@ -442,13 +442,13 @@ does not guarantee every resulting line fits the soft target.
 ### WrapLongConcatenationsRector
 
 Wraps existing inline concatenations on lines exceeding a configurable soft target
-(120 characters including indentation), with continuation dots at the start of lines:
+(120 characters including indentation), with continuation dots at the end of lines:
 
 ```php
-'attribute' => trans('validation.attributes.email')
-    .trans('dashboard.on_the')
-    .trans('allocated-tokens.create.step_1')
-    .trans('dashboard.tab'),
+'attribute' => trans('validation.attributes.email').
+    trans('dashboard.on_the').
+    trans('allocated-tokens.create.step_1').
+    trans('dashboard.tab'),
 ```
 
 Enable it explicitly in your `rector.php`:

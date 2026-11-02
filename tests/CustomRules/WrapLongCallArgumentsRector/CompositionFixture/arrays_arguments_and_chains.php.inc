@@ -6,9 +6,9 @@ $message = Message::make(['subject' => trans('validation.attributes.email').tran
 
 $message = Message::make(
     [
-        'subject' => trans('validation.attributes.email')
-            .trans('dashboard.on_the')
-            .trans('allocated-tokens.create.step_1'),
+        'subject' => trans('validation.attributes.email').
+            trans('dashboard.on_the').
+            trans('allocated-tokens.create.step_1'),
         'active' => true,
     ],
     'email',

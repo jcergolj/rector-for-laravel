@@ -71,7 +71,7 @@ class WrapLongConcatenationsWorkflowTest extends TestCase
             file_put_contents($path, $source);
             $command = [PHP_BINARY, $root.'/vendor/bin/rector', 'process', $path, '--config='.$config, '--no-progress-bar', '--no-ansi', '--clear-cache'];
             $this->runCommand($command);
-            $this->assertStringContainsString("\n    .suffix();", file_get_contents($path));
+            $this->assertStringContainsString(".\n    suffix();", file_get_contents($path));
 
             file_put_contents($config, $configuration.'->withSkip(['.$rule.'::class => ['.var_export($path, true).']]);');
             file_put_contents($path, $source);
@@ -94,7 +94,7 @@ class WrapLongConcatenationsWorkflowTest extends TestCase
         try {
             file_put_contents($path, $source);
             $this->runCommand([PHP_BINARY, $root.'/vendor/bin/rector', 'process', $path, '--config='.__DIR__.'/config/configured_rule.php', '--no-progress-bar', '--no-ansi', '--clear-cache']);
-            $this->assertSame(str_replace('.suffix()', "\r\n    .suffix()", $source), file_get_contents($path));
+            $this->assertSame(str_replace('.suffix()', ".\r\n    suffix()", $source), file_get_contents($path));
         } finally {
             unlink($path);
             unlink($file);
