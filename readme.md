@@ -439,6 +439,33 @@ preserve this layout; the second `Rector → Pint → Rector → Pint` cycle mak
 changes. This rule is opt-in, does not introduce variables or split literals, and
 does not guarantee every resulting line fits the soft target.
 
+### BlankLineBetweenMultilinePropertyAssignmentsRector
+
+Adds a blank line between adjacent `=` assignments whose right-hand sides are
+multiline property-access chains, in methods, functions, closures and nested blocks:
+
+```php
+$this->payload['section_1_question_2'] = $this->completedQuestionnaire
+    ->sectionQuestions
+    ->sectionOne
+    ->questionTwo;
+
+$this->payload['section_1_question_3'] = $this->completedQuestionnaire
+    ->sectionQuestions
+    ->sectionOne
+    ->questionThree;
+```
+
+Enable it explicitly with
+`withRules([BlankLineBetweenMultilinePropertyAssignmentsRector::class])`, importing
+`Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenMultilinePropertyAssignmentsRector`.
+This is a separate opt-in rule from `WrapLongPropertyAccessChainsRector` and does
+not wrap chains itself. If chains are first wrapped during the same Rector run,
+run Rector again to apply spacing to that new layout. Normal and nullsafe chains are supported. Single-line
+chains, single property fetches, other assignments and existing blank lines are
+unchanged. Leading comments stay with their assignment; pairs with a trailing
+comment on the first assignment are skipped to preserve comment ownership.
+
 ### WrapLongConcatenationsRector
 
 Wraps existing inline concatenations on lines exceeding a configurable soft target
