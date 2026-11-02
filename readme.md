@@ -309,6 +309,41 @@ This is a readability convention, not a hard line-length limit or a guarantee th
 every resulting line fits within 120 characters. Long indivisible arguments remain
 unchanged; the rule does not split strings or introduce temporary variables.
 
+### WrapLongConcatenationsRector
+
+Wraps existing inline concatenations on lines exceeding a configurable soft target
+(120 characters including indentation), with continuation dots at the start of lines:
+
+```php
+'attribute' => trans('validation.attributes.email')
+    .trans('dashboard.on_the')
+    .trans('allocated-tokens.create.step_1')
+    .trans('dashboard.tab'),
+```
+
+Enable it explicitly in your `rector.php`:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongConcatenationsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(WrapLongConcatenationsRector::class, [
+        WrapLongConcatenationsRector::MAX_LINE_LENGTH => 120,
+    ]);
+```
+
+The target must be a positive integer; `withRules()` uses the default. Exactly-at-target
+lines and existing multiline concatenations are unchanged. Unicode characters count
+as one character and tabs as four columns. Grouping, evaluation order, comments and
+literal bytes are preserved through syntax-guided whitespace edits. String literals,
+interpolated strings, URLs, regexes, heredocs and nowdocs are never split.
+
+Nested concatenations in calls and arrays are supported. Composition with array,
+argument and fluent-chain wrapping is tested in both registration orders. Run Pint
+afterward; the second `Rector → Pint` cycle is unchanged. This rule is opt-in and does
+not impose a hard line-length limit: indivisible operands can remain longer than 120.
+
 ### WrapLongBooleanConditionsRector
 
 Wraps inline `if`, `elseif`, `while`, and `do/while` conditions rooted in `||` or

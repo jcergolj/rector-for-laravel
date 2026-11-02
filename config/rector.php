@@ -97,6 +97,7 @@ return RectorConfig::configure()
         ValidationRuleArrayStringValueToArrayRector::class,
         // Opt-in rules:
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector::class,
+        // \Jcergolj\RectorForLaravel\CustomRules\WrapLongConcatenationsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongFluentChainsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongArraysRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenTestFixturesRector::class,
