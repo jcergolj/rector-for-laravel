@@ -113,7 +113,7 @@ $names = array_map(function (string $name) use ($prefix): string {
 }, $users);
 ```
 
-The rule preserves parameter types, defaults, variadics, references, `static`, declared return types, nested arrows, and arrows used inside fluent chains.
+Preserves types, captures and function signatures, including nested arrows.
 
 ### ModelCastsPropertyToCastsMethodRector
 
@@ -164,7 +164,7 @@ Invoice::where('status', 'paid')->latest()->first();
 Invoice::with('customer')->orderBy('created_at', 'desc')->get();
 ```
 
-The rule intentionally skips cases where `query()` is not immediately followed by another method call, and skips non-Eloquent classes that happen to define a `query()` method.
+Skips standalone `query()` calls and non-Eloquent classes.
 
 ### PhpUnitTestDocblockToAttributeRector
 
@@ -199,19 +199,20 @@ class ExampleTest extends TestCase
 }
 ```
 
-The rule removes the `@test` line, drops the docblock entirely if it becomes empty, preserves unrelated annotations such as `@covers`, and avoids introducing duplicate `#[Test]` attributes.
+Preserves other annotations and avoids duplicate `#[Test]` attributes.
 
 ## Opt-In Rules
 
-The rules below are intentionally not enabled in this package's default `config/rector.php`.
-The default config includes them as commented-out entries so they are easy to opt into explicitly.
+These rules are disabled by default. Uncomment them in `config/rector.php` or register them as shown below.
+
+All `WrapLong*` rules use a configurable **soft target of 120 characters**, including indentation.
+They leave existing multiline layouts unchanged and may still produce lines over the target.
+Targets must be positive integers; Unicode characters count as one and tabs as four spaces.
+Run Pint after Rector for project styling.
 
 ### WrapLongArraysRector
 
-Wraps inline arrays with multiple items on lines exceeding a configurable soft
-target (120 characters by default, including indentation). Nested arrays are
-expanded too. Enclosing multi-argument calls are expanded to one argument per line
-when an array inside their arguments is wrapped:
+Wraps long inline arrays, including nested arrays, and expands enclosing multi-argument calls:
 
 ```php
 $token = Token::factory()->for(User::factory()->create(['email' => 'joe.doe@example.com', 'first_name' => 'joe', 'last_name' => 'doe']), 'buyer');
@@ -250,22 +251,11 @@ To change the soft target, replace `withRules()` with:
 ])
 ```
 
-Exactly-at-target lines, existing multiline layouts, empty arrays and single-item
-arrays are left unchanged. Length counts Unicode characters, with tabs counted as
-four spaces. Keys, order, unpacking, references, comments and literal values are
-preserved using syntax-guided token edits and Rector's format-preserving printer.
-Both `[]` and `array()` syntax are supported. Run Pint afterward for normal project
-styling; repeated Rector/Pint cycles are stable.
-
-This is an optional readability convention, not a hard line-length limit or a
-PSR-12 requirement to wrap every long line. Indivisible strings, URLs, regexes,
-heredocs and other unsupported syntax are not split. General call/parameter/chain
-wrapping, PHPDoc, Blade, HTML, JavaScript and CSS are outside this rule's scope.
+Supports `[]` and `array()`. Skips empty and single-item arrays; never splits strings.
 
 ### WrapLongCallArgumentsRector
 
-Wraps inline argument lists of function, method, nullsafe method and static calls,
-and named-class or dynamic-class constructors, with one argument per line:
+Wraps long function, method and constructor calls with one argument per line:
 
 ```php
 $this->assertSame(
@@ -286,33 +276,12 @@ return RectorConfig::configure()
     ]);
 ```
 
-The soft target defaults to 120 characters including indentation; `withRules()`
-uses this default. The target must be a positive integer. Exactly-at-target lines
-are unchanged, Unicode characters count as one and tabs count as four columns.
-This rule is **not enabled in the published default config**.
-
-Named arguments, unpacking, references, comments, evaluation order, and string
-bytes are preserved through syntax-guided token edits. Trailing commas are added
-to wrapped lists. Dynamic callables and inline lists following multiline receivers
-are supported. Nested calls are considered using the current layout, avoiding
-unnecessary expansion of short nested calls after an outer list has been wrapped.
-
-Empty and single-argument lists, existing multiline lists, first-class callable
-references and anonymous-class constructors are left alone. Strings, interpolated
-strings, URLs, regexes, heredocs and nowdocs are not split. Long indivisible
-arguments may still exceed the target; this is not a hard line-length limit.
-
-Enable `WrapLongArraysRector` separately to expand arrays too. Multi-argument calls
-containing an array that needs wrapping get an expanded outer argument list even
-when array expansion alone would bring the lines under the target. Composition with
-array, fluent-chain, boolean and concatenation wrapping is tested in both rule orders.
-Run Pint afterward; repeating `Rector → Pint → Rector → Pint` leaves the second
-cycle unchanged.
+Skips empty and single-argument lists, first-class callable references and anonymous-class constructors.
+Enable `WrapLongArraysRector` separately to expand arrays too.
 
 ### WrapLongParameterListsRector
 
-Wraps long inline method, function, closure and arrow-function parameter lists
-with one parameter per line, including promoted constructor parameters:
+Wraps long parameter lists with one parameter per line, including promoted constructor parameters:
 
 ```php
 public function __construct(
@@ -335,29 +304,12 @@ return RectorConfig::configure()
     ]);
 ```
 
-`withRules()` uses the default soft target of 120. The target must be a positive
-integer. Length includes indentation through the closing parameter parenthesis;
-exactly-at-target signatures are unchanged. Unicode characters count as one and
-tabs as four columns. A long return type, closure capture or body alone does not
-trigger parameter wrapping. This rule is **not enabled in the published default config**.
-
-Promotion, attributes, types, defaults, references, variadics, comments and literal
-bytes are preserved using syntax-guided token edits. Wrapped lists receive a trailing
-comma. Empty, single-parameter and already-multiline lists are unchanged, including
-lists made multiline by array wrapping. Indivisible identifiers and strings are
-never split or renamed, and resulting lines may still exceed the soft target.
-Files containing `__LINE__` are skipped because adding lines could change its value.
-
-Composition with array, call-argument and fluent-chain wrapping is tested in both
-registration orders. Run Pint afterward; repeating `Rector → Pint → Rector → Pint`
-leaves the second cycle unchanged. This is an optional readability convention,
-not a hard line-length limit or a PSR-12 requirement.
+Measures through the closing parameter parenthesis, excluding return types and bodies.
+Skips empty and single-parameter lists, and files containing `__LINE__`.
 
 ### WrapLongFluentChainsRector
 
-Wraps inline fluent call chains on lines exceeding a configurable **soft target**
-(default: 120 characters, including indentation). Exactly 120 characters is unchanged.
-Unicode characters count as one character; tabs count as four columns.
+Wraps long fluent call chains with one continuation per line:
 
 ```php
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:5,10')->name('password.update');
@@ -383,31 +335,11 @@ return RectorConfig::configure()
     ]);
 ```
 
-The target must be a positive integer. Alternatively, enable it with `withRules()`
-to use the default target. It is **not enabled in the published default config**.
-
-Supports method and nullsafe method continuations after static calls, function
-calls, constructors, or another method call. The first call stays on the original
-line; continuations receive one indentation level. Evaluation order, nullsafe
-operators, comments, arguments, and literal values are preserved. Nested inline
-chains in arguments and arrays are supported without expanding their argument lists.
-When combined with `WrapLongArraysRector`, array and argument expansion can happen
-in the same pass as chain wrapping, with nested indentation preserved. Composition
-is tested with either rule registration order.
-
-Short lines, single calls, property-only chains, first-class callable chains, and
-already-multiline chains (including multiline arguments) are left alone. Run Pint
-after Rector to normalize indentation in nested expressions. Repeating
-`Rector → Pint → Rector → Pint` leaves the second cycle unchanged.
-
-This is a readability convention, not a hard line-length limit or a guarantee that
-every resulting line fits within 120 characters. Long indivisible arguments remain
-unchanged; the rule does not split strings or introduce temporary variables.
+Supports nested and nullsafe chains. Skips single calls, property-only chains and first-class callable chains.
 
 ### WrapLongPropertyAccessChainsRector
 
-Wraps inline property-access chains on lines exceeding a configurable soft target
-(120 characters by default, including indentation):
+Wraps long property-access chains:
 
 ```php
 $this->payload['section_1_question_1'] = $this->completedQuestionnaire
@@ -426,18 +358,7 @@ To change the target, use:
 ])
 ```
 
-The target must be a positive integer. Exactly-at-target lines, single property
-fetches, dynamic property names and existing multiline chains are unchanged. The
-first property stays beside its receiver; subsequent named property fetches each
-receive a continuation line. Normal and nullsafe operators, evaluation order,
-comments and literal values are preserved through syntax-guided token edits.
-Unicode characters count as one character and tabs as four columns.
-
-Nested expressions and composition with array, enclosing argument and fluent-chain
-wrapping are tested in both rule orders. The installed Rector printer and Pint
-preserve this layout; the second `Rector → Pint → Rector → Pint` cycle makes no
-changes. This rule is opt-in, does not introduce variables or split literals, and
-does not guarantee every resulting line fits the soft target.
+Supports nullsafe chains. Skips single property fetches and dynamic property names.
 
 ### BlankLineBetweenMultilinePropertyAssignmentsRector
 
@@ -459,17 +380,12 @@ $this->payload['section_1_question_3'] = $this->completedQuestionnaire
 Enable it explicitly with
 `withRules([BlankLineBetweenMultilinePropertyAssignmentsRector::class])`, importing
 `Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenMultilinePropertyAssignmentsRector`.
-This is a separate opt-in rule from `WrapLongPropertyAccessChainsRector` and does
-not wrap chains itself. If chains are first wrapped during the same Rector run,
-run Rector again to apply spacing to that new layout. Normal and nullsafe chains are supported. Single-line
-chains, single property fetches, other assignments and existing blank lines are
-unchanged. Leading comments stay with their assignment; pairs with a trailing
-comment on the first assignment are skipped to preserve comment ownership.
+Does not wrap chains itself. After wrapping chains, run Rector again to add spacing.
+Skips single-line chains, single property fetches and pairs with a trailing comment on the first assignment.
 
 ### WrapLongConcatenationsRector
 
-Wraps existing inline concatenations on lines exceeding a configurable soft target
-(120 characters including indentation), with continuation dots at the end of lines:
+Wraps long concatenations with dots at the end of continued lines:
 
 ```php
 'attribute' => trans('validation.attributes.email').
@@ -490,23 +406,12 @@ return RectorConfig::configure()
     ]);
 ```
 
-The target must be a positive integer; `withRules()` uses the default. Exactly-at-target
-lines and existing multiline concatenations are unchanged. Unicode characters count
-as one character and tabs as four columns. Grouping, evaluation order, comments and
-literal bytes are preserved through syntax-guided whitespace edits. String literals,
-interpolated strings, URLs, regexes, heredocs and nowdocs are never split.
-
-Nested concatenations in calls and arrays are supported. Composition with array,
-argument and fluent-chain wrapping is tested in both registration orders. Run Pint
-afterward; the second `Rector → Pint` cycle is unchanged. This rule is opt-in and does
-not impose a hard line-length limit: indivisible operands can remain longer than 120.
+Supports nested concatenations in calls and arrays. Never splits string literals.
 
 ### WrapLongBooleanConditionsRector
 
-Wraps inline `if`, `elseif`, `while`, and `do/while` conditions rooted in `||` or
-`&&` on lines exceeding a configurable soft target (default: 120 characters,
-including indentation). Operators stay at the end of continued condition lines;
-the final operand has no trailing operator:
+Wraps long `if`, `elseif`, `while` and `do/while` conditions using `||` or `&&`,
+with operators at the end of continued lines:
 
 ```php
 if (
@@ -529,21 +434,8 @@ return RectorConfig::configure()
     ]);
 ```
 
-Alternatively, use `withRules()` for the default target. The target must be a
-positive integer. This rule is **not enabled in the published default config**.
-Exactly-at-target lines and existing multiline conditions are unchanged. Unicode
-characters count as one character; tabs count as four columns.
-
-Syntax-guided token edits preserve parentheses, precedence, short-circuiting,
-comments, and literal values without extracting variables. Nested boolean groups
-and nested statements are supported. Keyword operators (`and`, `or`, `xor`),
-`for` headers, and boolean expressions outside these condition headers are left
-alone. Indivisible operands may still exceed the soft target.
-
-Run Pint afterward to normalize nested indentation. Tests verify stable
-`Rector → Pint → Rector → Pint` cycles, including composition with array, enclosing
-argument, and fluent-chain wrapping. This is an optional readability convention,
-not a hard line-length limit or a PSR-12 requirement.
+Preserves grouping and short-circuiting. Skips `and`, `or`, `xor`, `for` headers
+and boolean expressions outside these conditions.
 
 ### BlankLineBetweenTestFixturesRector
 
@@ -566,23 +458,12 @@ $firstToken = Token::factory()->for($buyer, 'buyer')->create();
 $secondToken = Token::factory()->for($buyer, 'buyer')->create();
 ```
 
-The supported boundary is deliberately syntactic: both statements must be standalone
-`=` assignments to different named local variables or `$this->namedProperty`, with
-right-hand sides rooted in a named `Class::factory()` call, optionally followed by
-fluent method calls. Multiline calls and leading comments are supported; existing
-blank lines are preserved. No model type inference or Arrange-phase guessing is used.
-
-Arbitrary assignments, repeated assignments to the same target, dynamic calls/targets,
-references, destructuring, nested blocks/closures, traits, providers and helpers are
-left alone. Pairs with a trailing inline comment on the first statement are also
-left alone so the parser/printer cannot detach the comment from its original line.
+Applies to `Class::factory()` assignments to different local variables or `$this` properties.
+Skips nested blocks, helpers, dynamic targets and pairs with a trailing comment on the first assignment.
 
 ### MiddlewareTestsFirstRector
 
-Groups middleware-wiring tests before other PHPUnit tests, preserving order within
-each group. It recognizes direct `assertMiddlewareIsApplied()` calls, not method
-names. Calls inside closures or nested classes, and first-class callable references,
-do not identify a middleware test. Dynamic method names are ignored.
+Moves tests calling `assertMiddlewareIsApplied()` before other tests, preserving order within each group.
 
 ```php
 public function test_can_view_tokens(): void
@@ -610,19 +491,12 @@ public function test_can_view_tokens(): void
 }
 ```
 
-Only test-method slots are reordered, so properties, setup methods, helpers and
-providers stay in place. Attributes, docblocks, associated leading comments, method
-bodies and data-provider references move with their tests. Non-test classes are
-unchanged. Classes with trailing inline member comments are skipped to preserve
-comment ownership. The rule does not add or remove middleware coverage. Run Pint afterward
-to normalize method separators if needed.
+Non-test members stay in place. Calls inside closures or nested classes do not count.
+Skips classes with trailing inline member comments. Run Pint afterward if needed.
 
 ### DataProviderBeforeTestRector
 
-Places each local PHPUnit data provider immediately above the first test that uses
-it, so the input cases can be read before the test body. Shared providers appear
-only once, above their first consuming test. Multiple providers are ordered by
-their references on that test.
+Moves each local PHPUnit data provider above the first test that uses it.
 
 ```php
 public static function values(): array
@@ -637,15 +511,9 @@ public function test_value(string $value): void
 }
 ```
 
-Supports PHPUnit `#[DataProvider('method')]` attributes (including aliases and
-named `methodName` arguments) and legacy `@dataProvider method` annotations.
-Only providers declared in the same test class move; inherited, external and
-non-literal references are left alone. Unused providers, non-test classes and
-traits are unchanged. Attributes, docblocks and leading comments stay with their
-methods. Classes with trailing inline member comments are skipped to preserve
-comment ownership. Run Pint afterward to normalize method separators if needed.
-
-The rule is idempotent and can be combined with `MiddlewareTestsFirstRector`.
+Supports `#[DataProvider('method')]` and `@dataProvider method`.
+Skips inherited, external and unused providers, and classes with trailing inline member comments.
+Works with `MiddlewareTestsFirstRector`. Run Pint afterward if needed.
 
 To enable any of these test rules, add them to your `rector.php`:
 
@@ -663,15 +531,11 @@ return RectorConfig::configure()
     ]);
 ```
 
-These rules are idempotent. Fixture spacing is compatible with the existing assertion
-spacing rule and `NewlineBeforeNewAssignSetRector`; Pint's default Laravel preset
-preserves blank lines between these assignments.
-
 ### RemoveFillableFromUnguardedModelsRector
 
 Removes `$fillable` properties from Eloquent models for projects that intentionally run with unguarded models.
 
-Enable it only if your application relies on `Model::unguard()` or an equivalent base-model convention. If your project depends on per-model mass-assignment allowlists, this rule is not safe to use.
+**Only enable for unguarded models** (`Model::unguard()` or equivalent). Unsafe if you rely on `$fillable` allowlists.
 
 To opt in, add the rule to your published `rector.php` config:
 
@@ -712,7 +576,7 @@ class User extends Model
 
 Removes `down()` methods from Laravel migrations for teams that intentionally do not keep migrations reversible.
 
-This rule is opinionated and should only be enabled if your project explicitly treats migrations as forward-only. If your team expects rollback support from individual migration files, do not enable it.
+**Only enable for forward-only migrations.** Do not use if your team needs migration rollbacks.
 
 To opt in, add the rule to your published `rector.php` config:
 
