@@ -14,7 +14,10 @@ $message = Message::make(
     'email',
 )
     ->forUser(
-        $this->completedQuestionnaire->sectionQuestions->sectionOne->questionOne,
+        $this->completedQuestionnaire
+            ->sectionQuestions
+            ->sectionOne
+            ->questionOne,
         $apiRequestParams['section_1_question_1'],
     )
     ->send();
