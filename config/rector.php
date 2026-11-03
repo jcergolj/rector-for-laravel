@@ -96,12 +96,11 @@ return RectorConfig::configure()
         UseComponentPropertyWithinCommandsRector::class,
         ValidationRuleArrayStringValueToArrayRector::class,
         // Opt-in rules:
-        // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenMultilinePropertyAssignmentsRector::class,
+        // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenUnrelatedAssignmentsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongListsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongChainsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongConcatenationsRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenTestFixturesRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\DataProviderBeforeTestRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\RemoveFillableFromUnguardedModelsRector::class,

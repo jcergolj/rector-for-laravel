@@ -287,28 +287,59 @@ The previous separate list and chain rules have been removed. Use the two merged
 rules above, with one shared `MAX_LINE_LENGTH` target per rule. Both remain opt-in;
 the five default custom rules are unchanged.
 
-### BlankLineBetweenMultilinePropertyAssignmentsRector
+### BlankLineBetweenUnrelatedAssignmentsRector
 
-Adds a blank line between adjacent `=` assignments whose right-hand sides are
-multiline property-access chains, in methods, functions, closures and nested blocks:
+Adds a blank line between adjacent `=` assignments to unrelated local variables
+or statically named `$this` properties. Applies in tests and application code,
+including functions, methods, closures, nested blocks and file-level code.
+Line length and chaining do not affect the decision.
 
 ```php
-$this->payload['section_1_question_2'] = $this->completedQuestionnaire
-    ->sectionQuestions
-    ->sectionOne
-    ->questionTwo;
-
-$this->payload['section_1_question_3'] = $this->completedQuestionnaire
-    ->sectionQuestions
-    ->sectionOne
-    ->questionThree;
+$user = User::factory()->create();
+$name = $user->name;
+$invoice = Invoice::factory()->create();
+$total = $invoice->total;
+$enabled = true;
 ```
 
-Enable it explicitly with
-`withRules([BlankLineBetweenMultilinePropertyAssignmentsRector::class])`, importing
-`Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenMultilinePropertyAssignmentsRector`.
-Does not wrap chains itself. After wrapping chains, run Rector again to add spacing.
-Skips single-line chains, single property fetches and pairs with a trailing comment on the first assignment.
+becomes:
+
+```php
+$user = User::factory()->create();
+$name = $user->name;
+
+$invoice = Invoice::factory()->create();
+$total = $invoice->total;
+
+$enabled = true;
+```
+
+Enable it explicitly:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenUnrelatedAssignmentsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withRules([
+        BlankLineBetweenUnrelatedAssignmentsRector::class,
+    ]);
+```
+
+Assignments stay together when they target the same variable/property, or either
+right-hand side directly references the other's target. Explicit closure captures
+and arrow-function captures count; shadowed parameters and anonymous-class bodies
+do not. Sharing a common input alone does not make two assignments related.
+Only adjacent assignments are compared: this is not whole-program dependency or
+alias analysis, and hidden dependencies inside called methods are not inferred.
+
+Preserves existing blank lines and comments. Skips pairs with a trailing comment
+on the first assignment, dynamic targets/reads, array-offset and destructuring
+targets, reference/compound assignments, and ambiguous expressions such as nested
+assignments, increments, `compact()`, `extract()`, `get_defined_vars()`, `eval` and
+`include`. Does not wrap lines itself; works with the wrapping rules in one run.
+Replaces the two previous fixture and multiline-property spacing rules, which
+have been removed without compatibility aliases. This rule remains opt-in.
 
 ### WrapLongConcatenationsRector
 
@@ -363,30 +394,6 @@ return RectorConfig::configure()
 
 Preserves grouping and short-circuiting. Skips `and`, `or`, `xor`, `for` headers
 and boolean expressions outside these conditions.
-
-### BlankLineBetweenTestFixturesRector
-
-Adds a blank line between adjacent Laravel factory fixture assignments in PHPUnit
-test methods and `setUp()`, including tests extending your application's `Tests\TestCase`.
-
-```php
-$buyer = User::factory()->create();
-$firstToken = Token::factory()->for($buyer, 'buyer')->create();
-$secondToken = Token::factory()->for($buyer, 'buyer')->create();
-```
-
-becomes:
-
-```php
-$buyer = User::factory()->create();
-
-$firstToken = Token::factory()->for($buyer, 'buyer')->create();
-
-$secondToken = Token::factory()->for($buyer, 'buyer')->create();
-```
-
-Applies to `Class::factory()` assignments to different local variables or `$this` properties.
-Skips nested blocks, helpers, dynamic targets and pairs with a trailing comment on the first assignment.
 
 ### MiddlewareTestsFirstRector
 
@@ -445,14 +452,12 @@ Works with `MiddlewareTestsFirstRector`. Run Pint afterward if needed.
 To enable any of these test rules, add them to your `rector.php`:
 
 ```php
-use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenTestFixturesRector;
 use Jcergolj\RectorForLaravel\CustomRules\DataProviderBeforeTestRector;
 use Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withRules([
-        BlankLineBetweenTestFixturesRector::class,
         MiddlewareTestsFirstRector::class,
         DataProviderBeforeTestRector::class,
     ]);

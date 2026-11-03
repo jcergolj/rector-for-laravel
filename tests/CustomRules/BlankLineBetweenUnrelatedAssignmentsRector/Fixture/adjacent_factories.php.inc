@@ -27,7 +27,6 @@ class TokenTest extends \PHPUnit\Framework\TestCase
     public function buyer_has_tokens(): void
     {
         $buyer = User::factory()->create();
-
         $firstToken = Token::factory()->for($buyer, 'buyer')->create();
 
         $secondToken = Token::factory()->for($buyer, 'buyer')->create();

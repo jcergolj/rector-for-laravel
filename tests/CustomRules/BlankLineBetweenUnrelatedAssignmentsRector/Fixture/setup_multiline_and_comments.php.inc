@@ -57,7 +57,6 @@ class TokenTest extends \Tests\TestCase
     {
         parent::setUp();
         $this->buyer = User::factory()->create();
-
         // This token belongs to the buyer.
         $this->token = Token::factory()
             ->for($this->buyer, 'buyer')
