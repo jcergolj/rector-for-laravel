@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jcergolj\RectorForLaravel\Tests\CustomRules\BlankLineBetweenMultilinePropertyAssignmentsRector;
 
 use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenMultilinePropertyAssignmentsRector;
-use Jcergolj\RectorForLaravel\CustomRules\WrapLongPropertyAccessChainsRector;
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongChainsRector;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +18,7 @@ class BlankLineBetweenMultilinePropertyAssignmentsWorkflowTest extends TestCase
         $path = $file.'.php';
         $config = $file.'-config.php';
         $root = dirname(__DIR__, 3);
-        $rules = [BlankLineBetweenMultilinePropertyAssignmentsRector::class, WrapLongPropertyAccessChainsRector::class];
+        $rules = [BlankLineBetweenMultilinePropertyAssignmentsRector::class, WrapLongChainsRector::class];
         if (! $spacingFirst) {
             $rules = array_reverse($rules);
         }

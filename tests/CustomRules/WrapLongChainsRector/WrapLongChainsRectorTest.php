@@ -34,12 +34,9 @@ class WrapLongChainsRectorTest extends AbstractRectorTestCase
     public static function provideData(): \Iterator
     {
         yield from self::yieldFilesFromDirectory(__DIR__.'/Fixture');
-        foreach (['WrapLongFluentChainsRector', 'WrapLongPropertyAccessChainsRector'] as $rule) {
+        foreach (['MethodChains', 'PropertyChains'] as $rule) {
             foreach (glob(dirname(__DIR__).'/'.$rule.'/Fixture/*.php.inc') as $fixture) {
-                // Legacy no-op fixtures contain chains intentionally outside that old rule's scope.
-                if (basename($fixture) !== 'unchanged.php.inc') {
-                    yield $rule.'/'.basename($fixture) => [$fixture];
-                }
+                yield $rule.'/'.basename($fixture) => [$fixture];
             }
         }
     }

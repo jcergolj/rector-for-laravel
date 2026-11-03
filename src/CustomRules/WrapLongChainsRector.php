@@ -16,11 +16,9 @@ use RectorLaravel\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
-class WrapLongChainsRector extends AbstractRector implements ConfigurableRectorInterface
+final class WrapLongChainsRector extends AbstractRector implements ConfigurableRectorInterface
 {
     public const MAX_LINE_LENGTH = 'max_line_length';
-
-    protected const CHAIN_KIND = 'all';
 
     private int $maxLineLength = 120;
 
@@ -36,15 +34,6 @@ class WrapLongChainsRector extends AbstractRector implements ConfigurableRectorI
 
     public function getRuleDefinition(): RuleDefinition
     {
-        if (static::CHAIN_KIND === 'properties') {
-            return new RuleDefinition('Wrap long inline property-access chains', [
-                new CodeSample(
-                    "\$this->payload['section_1_question_1'] = \$this->completedQuestionnaire->sectionQuestions->sectionOne->questionOne;",
-                    "\$this->payload['section_1_question_1'] = \$this->completedQuestionnaire\n    ->sectionQuestions\n    ->sectionOne\n    ->questionOne;",
-                ),
-            ]);
-        }
-
         return new RuleDefinition('Wrap long method, property and mixed access chains', [
             new CodeSample(
                 "Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:5,10')->name('password.update');",
@@ -56,16 +45,12 @@ class WrapLongChainsRector extends AbstractRector implements ConfigurableRectorI
     /** @return array<class-string<Node>> */
     public function getNodeTypes(): array
     {
-        return match (static::CHAIN_KIND) {
-            'methods' => [MethodCall::class, NullsafeMethodCall::class],
-            'properties' => [PropertyFetch::class, NullsafePropertyFetch::class],
-            default => [MethodCall::class, NullsafeMethodCall::class, PropertyFetch::class, NullsafePropertyFetch::class],
-        };
+        return [MethodCall::class, NullsafeMethodCall::class, PropertyFetch::class, NullsafePropertyFetch::class];
     }
 
     public function refactor(Node $node): ?Node
     {
-        $attribute = 'wrap_long_chain_receiver_'.static::CHAIN_KIND;
+        $attribute = 'wrap_long_chain_receiver';
         if ($node->getAttribute($attribute, false)) {
             return null;
         }
@@ -92,7 +77,7 @@ class WrapLongChainsRector extends AbstractRector implements ConfigurableRectorI
         if ($receiver instanceof CallLike && $receiver->isFirstClassCallable()) {
             return null;
         }
-        if (static::CHAIN_KIND === 'properties' || ! $receiver instanceof CallLike) {
+        if (! $receiver instanceof CallLike) {
             array_pop($links);
         }
         if ($links === []) {
@@ -138,10 +123,6 @@ class WrapLongChainsRector extends AbstractRector implements ConfigurableRectorI
 
     private function isChainLink(Node $node): bool
     {
-        return match (static::CHAIN_KIND) {
-            'methods' => $node instanceof MethodCall || $node instanceof NullsafeMethodCall,
-            'properties' => $node instanceof PropertyFetch || $node instanceof NullsafePropertyFetch,
-            default => $node instanceof MethodCall || $node instanceof NullsafeMethodCall || $node instanceof PropertyFetch || $node instanceof NullsafePropertyFetch,
-        };
+        return $node instanceof MethodCall || $node instanceof NullsafeMethodCall || $node instanceof PropertyFetch || $node instanceof NullsafePropertyFetch;
     }
 }

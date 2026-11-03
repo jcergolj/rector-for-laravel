@@ -34,7 +34,7 @@ class WrapLongListsRectorTest extends AbstractRectorTestCase
     public static function provideData(): \Iterator
     {
         yield from self::yieldFilesFromDirectory(__DIR__.'/Fixture');
-        foreach (['WrapLongArraysRector' => ['nested_factory', 'long_syntax_and_existing_commas'], 'WrapLongCallArgumentsRector' => ['assertion', 'call_forms'], 'WrapLongParameterListsRector' => ['promotion', 'functions_and_closures', 'line_sensitive', 'later_line_sensitive']] as $rule => $fixtures) {
+        foreach (['ArrayLists' => ['nested_factory', 'long_syntax_and_existing_commas'], 'ArgumentLists' => ['assertion', 'call_forms'], 'ParameterLists' => ['promotion', 'functions_and_closures', 'line_sensitive', 'later_line_sensitive']] as $rule => $fixtures) {
             foreach ($fixtures as $fixture) {
                 yield $rule.'/'.$fixture => [dirname(__DIR__).'/'.$rule.'/Fixture/'.$fixture.'.php.inc'];
             }

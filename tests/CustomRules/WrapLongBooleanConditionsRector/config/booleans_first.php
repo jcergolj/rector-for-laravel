@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Jcergolj\RectorForLaravel\CustomRules\WrapLongArraysRector;
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongListsRector;
 use Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector;
-use Jcergolj\RectorForLaravel\CustomRules\WrapLongFluentChainsRector;
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongChainsRector;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()->withRules([
-    WrapLongFluentChainsRector::class,
+    WrapLongChainsRector::class,
     WrapLongBooleanConditionsRector::class,
-    WrapLongArraysRector::class,
+    WrapLongListsRector::class,
 ]);
