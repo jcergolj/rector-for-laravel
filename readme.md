@@ -210,7 +210,98 @@ They leave existing multiline layouts unchanged and may still produce lines over
 Targets must be positive integers; Unicode characters count as one and tabs as four spaces.
 Run Pint after Rector for project styling.
 
-### WrapLongArraysRector
+### WrapLongListsRector
+
+Wraps long inline arrays, call argument lists and declaration parameter lists with
+one item per line. Supports nested arrays, function/method/constructor calls,
+closures, arrow functions and promoted constructor parameters. Enclosing
+multi-argument calls are expanded when their inline arrays need wrapping.
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongListsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(WrapLongListsRector::class, [
+        WrapLongListsRector::MAX_LINE_LENGTH => 120,
+    ]);
+```
+
+For example:
+
+```php
+$token = Token::factory()->for(User::factory()->create(['email' => 'joe.doe@example.com', 'first_name' => 'joe', 'last_name' => 'doe']), 'buyer');
+```
+
+becomes:
+
+```php
+$token = Token::factory()->for(
+    User::factory()->create([
+        'email' => 'joe.doe@example.com',
+        'first_name' => 'joe',
+        'last_name' => 'doe',
+    ]),
+    'buyer',
+);
+```
+
+Supports both `[]` and `array()`. Skips empty and single-item lists, existing
+multiline lists, first-class callable references and anonymous-class constructor
+argument lists. Never splits strings. Parameter-list length is measured through
+the closing parenthesis, excluding return types and bodies; parameter wrapping
+is skipped in files containing `__LINE__`.
+
+### WrapLongChainsRector
+
+Wraps long method, property and mixed access chains before `->` or `?->`:
+
+```php
+$value = $this->completedQuestionnaireWithADescriptiveName->sectionQuestionsWithADescriptiveName->first()->questionOneWithADescriptiveName;
+```
+
+becomes:
+
+```php
+$value = $this->completedQuestionnaireWithADescriptiveName
+    ->sectionQuestionsWithADescriptiveName
+    ->first()
+    ->questionOneWithADescriptiveName;
+```
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongChainsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(WrapLongChainsRector::class, [
+        WrapLongChainsRector::MAX_LINE_LENGTH => 120,
+    ]);
+```
+
+Supports nested and nullsafe chains. Keeps the first access beside a variable
+receiver, and skips indivisible single accesses, existing multiline chains,
+dynamic property names and first-class callable chains.
+
+### Migrating from the separate wrapping rules
+
+Replace the old registrations with the merged rules:
+
+| Old rules | Replacement |
+| --- | --- |
+| `WrapLongArraysRector`, `WrapLongCallArgumentsRector`, `WrapLongParameterListsRector` | `WrapLongListsRector` |
+| `WrapLongFluentChainsRector`, `WrapLongPropertyAccessChainsRector` | `WrapLongChainsRector` |
+
+The old names remain available as deprecated compatibility rules, retaining
+their individual scopes and `MAX_LINE_LENGTH` configuration. Register either
+the merged rule or its old rules, not both. Each merged rule uses one target;
+if your old rules used different targets, choose a shared target when migrating.
+Both merged rules remain opt-in; the five default custom rules are unchanged.
+
+<details>
+<summary>Deprecated wrapping rules: individual scopes and examples</summary>
+
+#### WrapLongArraysRector
 
 Wraps long inline arrays, including nested arrays, and expands enclosing multi-argument calls:
 
@@ -253,7 +344,7 @@ To change the soft target, replace `withRules()` with:
 
 Supports `[]` and `array()`. Skips empty and single-item arrays; never splits strings.
 
-### WrapLongCallArgumentsRector
+#### WrapLongCallArgumentsRector
 
 Wraps long function, method and constructor calls with one argument per line:
 
@@ -279,7 +370,7 @@ return RectorConfig::configure()
 Skips empty and single-argument lists, first-class callable references and anonymous-class constructors.
 Enable `WrapLongArraysRector` separately to expand arrays too.
 
-### WrapLongParameterListsRector
+#### WrapLongParameterListsRector
 
 Wraps long parameter lists with one parameter per line, including promoted constructor parameters:
 
@@ -307,7 +398,7 @@ return RectorConfig::configure()
 Measures through the closing parameter parenthesis, excluding return types and bodies.
 Skips empty and single-parameter lists, and files containing `__LINE__`.
 
-### WrapLongFluentChainsRector
+#### WrapLongFluentChainsRector
 
 Wraps long fluent call chains with one continuation per line:
 
@@ -337,7 +428,7 @@ return RectorConfig::configure()
 
 Supports nested and nullsafe chains. Skips single calls, property-only chains and first-class callable chains.
 
-### WrapLongPropertyAccessChainsRector
+#### WrapLongPropertyAccessChainsRector
 
 Wraps long property-access chains:
 
@@ -359,6 +450,8 @@ To change the target, use:
 ```
 
 Supports nullsafe chains. Skips single property fetches and dynamic property names.
+
+</details>
 
 ### BlankLineBetweenMultilinePropertyAssignmentsRector
 
