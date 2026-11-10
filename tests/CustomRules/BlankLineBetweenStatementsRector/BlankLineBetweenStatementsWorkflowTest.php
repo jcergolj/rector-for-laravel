@@ -18,7 +18,7 @@ class BlankLineBetweenStatementsWorkflowTest extends TestCase
     #[DataProvider('provideOrders')]
     public function test_spacing_is_stable_with_assertions_wrapping_and_pint(bool $spacingFirst): void
     {
-        $parts = explode("\n-----\n", file_get_contents(__DIR__.'/../BlankLineBetweenUnrelatedAssignmentsRector/CompositionFixture/unrelated_chains.php.inc'), 2);
+        $parts = explode("\n-----\n", file_get_contents(__DIR__.'/CompositionFixture/unrelated_chains.php.inc'), 2);
 
         $rules = [BlankLineBetweenStatementsRector::class, AddBlankLineAfterPhpUnitAssertionRector::class, WrapLongChainsRector::class, WrapLongListsRector::class, WrapLongBooleanConditionsRector::class, WrapLongConcatenationsRector::class];
 

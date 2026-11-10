@@ -81,7 +81,7 @@ final class BlankLineBetweenStatementsRector extends AbstractRector
             $position = $comment->getEndTokenPos();
         }
 
-        // Reuse the assignment rule's token-based insertion: never change the AST layout.
+        // Rector may visit the same tokens repeatedly before printing.
         if (preg_match('/\n[ \t]*$/', $tokens[$position]->text) === 1) {
             return false;
         }

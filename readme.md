@@ -332,65 +332,15 @@ Class members and `match` arms are not separated. Match-arm spacing is a separat
 concern, not part of this rule. Works with `AddBlankLineAfterPhpUnitAssertionRector`
 and all `WrapLong*` rules, in either registration order.
 
-**Migrating in v14:** replace the `BlankLineBetweenUnrelatedAssignmentsRector`
-import and registration with `BlankLineBetweenStatementsRector`. Do not enable
-both. Keep existing manual blank lines and `AddBlankLineAfterPhpUnitAssertionRector`;
-neither needs removing. Both spacing rules remain opt-in, and the old rule's
-behavior is unchanged.
+**Breaking change in v15:** `BlankLineBetweenUnrelatedAssignmentsRector` has been
+removed without a compatibility alias. Replace its import and registration with
+`BlankLineBetweenStatementsRector`, introduced in v14. Update any rule-specific
+skip entries to use the new class as well. The replacement intentionally separates
+all consecutive statements, including dependent assignments and calls, rather
+than only unrelated assignments. It remains opt-in.
 
-### BlankLineBetweenUnrelatedAssignmentsRector
-
-Adds a blank line between adjacent `=` assignments to unrelated local variables
-or statically named `$this` properties. Applies in tests and application code,
-including functions, methods, closures, nested blocks and file-level code.
-Line length and chaining do not affect the decision.
-
-```php
-$user = User::factory()->create();
-$name = $user->name;
-$invoice = Invoice::factory()->create();
-$total = $invoice->total;
-$enabled = true;
-```
-
-becomes:
-
-```php
-$user = User::factory()->create();
-$name = $user->name;
-
-$invoice = Invoice::factory()->create();
-$total = $invoice->total;
-
-$enabled = true;
-```
-
-Enable it explicitly:
-
-```php
-use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenUnrelatedAssignmentsRector;
-use Rector\Config\RectorConfig;
-
-return RectorConfig::configure()
-    ->withRules([
-        BlankLineBetweenUnrelatedAssignmentsRector::class,
-    ]);
-```
-
-Assignments stay together when they target the same variable/property, or either
-right-hand side directly references the other's target. Explicit closure captures
-and arrow-function captures count; shadowed parameters and anonymous-class bodies
-do not. Sharing a common input alone does not make two assignments related.
-Only adjacent assignments are compared: this is not whole-program dependency or
-alias analysis, and hidden dependencies inside called methods are not inferred.
-
-Preserves existing blank lines and comments. Skips pairs with a trailing comment
-on the first assignment, dynamic targets/reads, array-offset and destructuring
-targets, reference/compound assignments, and ambiguous expressions such as nested
-assignments, increments, `compact()`, `extract()`, `get_defined_vars()`, `eval` and
-`include`. Does not wrap lines itself; works with the wrapping rules in one run.
-Replaces the two previous fixture and multiline-property spacing rules, which
-have been removed without compatibility aliases. This rule remains opt-in.
+Keep existing manual blank lines and `AddBlankLineAfterPhpUnitAssertionRector`;
+neither needs removing.
 
 ### WrapLongConcatenationsRector
 

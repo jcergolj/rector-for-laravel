@@ -97,8 +97,6 @@ return RectorConfig::configure()
         ValidationRuleArrayStringValueToArrayRector::class,
         // Opt-in rules:
         // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenStatementsRector::class,
-        // Alternative narrower spacing rule (do not enable both):
-        // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenUnrelatedAssignmentsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongListsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongChainsRector::class,
         // \Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector::class,
