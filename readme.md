@@ -67,7 +67,11 @@ This is a good option if you want to keep the default setup with no local modifi
 
 ## Included Custom Rules
 
-If you use this package's default `rector.php` config, all five custom rules below are enabled.
+If you use this package's default `rector.php` config, all 14 custom rules documented below are enabled.
+Remove unwanted rules from your published config. In particular, the default config
+assumes intentionally unguarded models and forward-only migrations: disable
+`RemoveFillableFromUnguardedModelsRector` if you rely on `$fillable` allowlists, and
+`RemoveMigrationDownMethodRector` if you need migration rollbacks.
 
 ### AddBlankLineAfterPhpUnitAssertionRector
 
@@ -201,9 +205,10 @@ class ExampleTest extends TestCase
 
 Preserves other annotations and avoids duplicate `#[Test]` attributes.
 
-## Opt-In Rules
+## Additional Custom Rules
 
-These rules are disabled by default. Uncomment them in `config/rector.php` or register them as shown below.
+These rules are also enabled in the default config. The examples below show how
+to register or configure them when maintaining your own `rector.php`.
 
 All `WrapLong*` rules use a configurable **soft target of 120 characters**, including indentation.
 They leave existing multiline layouts unchanged and may still produce lines over the target.
@@ -284,8 +289,7 @@ receiver, and skips indivisible single accesses, existing multiline chains,
 dynamic property names and first-class callable chains.
 
 The previous separate list and chain rules have been removed. Use the two merged
-rules above, with one shared `MAX_LINE_LENGTH` target per rule. Both remain opt-in;
-the five default custom rules are unchanged.
+rules above, with one shared `MAX_LINE_LENGTH` target per rule.
 
 ### BlankLineBetweenStatementsRector
 
@@ -331,13 +335,6 @@ inside braces, or spacing within a single statement (such as a `for` header).
 Class members and `match` arms are not separated. Match-arm spacing is a separate
 concern, not part of this rule. Works with `AddBlankLineAfterPhpUnitAssertionRector`
 and all `WrapLong*` rules, in either registration order.
-
-**Breaking change in v15:** `BlankLineBetweenUnrelatedAssignmentsRector` has been
-removed without a compatibility alias. Replace its import and registration with
-`BlankLineBetweenStatementsRector`, introduced in v14. Update any rule-specific
-skip entries to use the new class as well. The replacement intentionally separates
-all consecutive statements, including dependent assignments and calls, rather
-than only unrelated assignments. It remains opt-in.
 
 Keep existing manual blank lines and `AddBlankLineAfterPhpUnitAssertionRector`;
 neither needs removing.
@@ -470,7 +467,7 @@ Removes `$fillable` properties from Eloquent models for projects that intentiona
 
 **Only enable for unguarded models** (`Model::unguard()` or equivalent). Unsafe if you rely on `$fillable` allowlists.
 
-To opt in, add the rule to your published `rector.php` config:
+When maintaining your own `rector.php`, register the rule as follows:
 
 ```php
 use Jcergolj\RectorForLaravel\CustomRules\RemoveFillableFromUnguardedModelsRector;
@@ -511,7 +508,7 @@ Removes `down()` methods from Laravel migrations for teams that intentionally do
 
 **Only enable for forward-only migrations.** Do not use if your team needs migration rollbacks.
 
-To opt in, add the rule to your published `rector.php` config:
+When maintaining your own `rector.php`, register the rule as follows:
 
 ```php
 use Jcergolj\RectorForLaravel\CustomRules\RemoveMigrationDownMethodRector;

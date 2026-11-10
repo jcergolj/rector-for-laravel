@@ -4,9 +4,18 @@ declare(strict_types=1);
 
 use Jcergolj\RectorForLaravel\CustomRules\AddBlankLineAfterPhpUnitAssertionRector;
 use Jcergolj\RectorForLaravel\CustomRules\ArrowFunctionToClosureRector;
+use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenStatementsRector;
+use Jcergolj\RectorForLaravel\CustomRules\DataProviderBeforeTestRector;
+use Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector;
 use Jcergolj\RectorForLaravel\CustomRules\ModelCastsPropertyToCastsMethodRector;
 use Jcergolj\RectorForLaravel\CustomRules\ModelQueryToDirectStaticCallRector;
 use Jcergolj\RectorForLaravel\CustomRules\PhpUnitTestDocblockToAttributeRector;
+use Jcergolj\RectorForLaravel\CustomRules\RemoveFillableFromUnguardedModelsRector;
+use Jcergolj\RectorForLaravel\CustomRules\RemoveMigrationDownMethodRector;
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector;
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongChainsRector;
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongConcatenationsRector;
+use Jcergolj\RectorForLaravel\CustomRules\WrapLongListsRector;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
@@ -66,9 +75,20 @@ return RectorConfig::configure()
         AddVoidReturnTypeWhereNoReturnRector::class,
         AddBlankLineAfterPhpUnitAssertionRector::class,
         ArrowFunctionToClosureRector::class,
+        BlankLineBetweenStatementsRector::class,
+        DataProviderBeforeTestRector::class,
+        MiddlewareTestsFirstRector::class,
         ModelCastsPropertyToCastsMethodRector::class,
         ModelQueryToDirectStaticCallRector::class,
         PhpUnitTestDocblockToAttributeRector::class,
+        // Requires intentionally unguarded models; removes $fillable allowlists.
+        RemoveFillableFromUnguardedModelsRector::class,
+        // Requires forward-only migrations; removes rollback methods.
+        RemoveMigrationDownMethodRector::class,
+        WrapLongBooleanConditionsRector::class,
+        WrapLongChainsRector::class,
+        WrapLongConcatenationsRector::class,
+        WrapLongListsRector::class,
         AnonymousMigrationsRector::class,
         AppEnvironmentComparisonToParameterRector::class,
         ApplyDefaultInsteadOfNullCoalesceRector::class,
@@ -95,16 +115,6 @@ return RectorConfig::configure()
         ThrowIfRector::class,
         UseComponentPropertyWithinCommandsRector::class,
         ValidationRuleArrayStringValueToArrayRector::class,
-        // Opt-in rules:
-        // \Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenStatementsRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\WrapLongListsRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\WrapLongChainsRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\WrapLongBooleanConditionsRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\WrapLongConcatenationsRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\MiddlewareTestsFirstRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\DataProviderBeforeTestRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\RemoveFillableFromUnguardedModelsRector::class,
-        // \Jcergolj\RectorForLaravel\CustomRules\RemoveMigrationDownMethodRector::class,
     ])
     ->withCache(
         cacheClass: FileCacheStorage::class,
