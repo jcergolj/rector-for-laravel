@@ -287,6 +287,57 @@ The previous separate list and chain rules have been removed. Use the two merged
 rules above, with one shared `MAX_LINE_LENGTH` target per rule. Both remain opt-in;
 the five default custom rules are unchanged.
 
+### BlankLineBetweenStatementsRector
+
+Adds a blank line between consecutive statements, even when they are closely
+related. Applies to functions, methods, closures, nested control-flow bodies and
+file-level code. Separates assignments, function/method/static calls (including
+`throw_unless()` and `abort_if()`), and boundaries before and after control flow.
+
+```php
+$person = $mapping->fresh();
+$link = $person;
+$link->associateWith($moodleUserId, 'manual');
+EsrAudit::create(['action' => 'manual_link']);
+```
+
+becomes:
+
+```php
+$person = $mapping->fresh();
+
+$link = $person;
+
+$link->associateWith($moodleUserId, 'manual');
+
+EsrAudit::create(['action' => 'manual_link']);
+```
+
+Enable it explicitly:
+
+```php
+use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenStatementsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withRules([
+        BlankLineBetweenStatementsRector::class,
+    ]);
+```
+
+Preserves existing blank lines, leading/trailing comment attachment, indentation
+and LF/CRLF line endings. Does not add trailing spaces, blank lines immediately
+inside braces, or spacing within a single statement (such as a `for` header).
+Class members and `match` arms are not separated. Match-arm spacing is a separate
+concern, not part of this rule. Works with `AddBlankLineAfterPhpUnitAssertionRector`
+and all `WrapLong*` rules, in either registration order.
+
+**Migrating in v14:** replace the `BlankLineBetweenUnrelatedAssignmentsRector`
+import and registration with `BlankLineBetweenStatementsRector`. Do not enable
+both. Keep existing manual blank lines and `AddBlankLineAfterPhpUnitAssertionRector`;
+neither needs removing. Both spacing rules remain opt-in, and the old rule's
+behavior is unchanged.
+
 ### BlankLineBetweenUnrelatedAssignmentsRector
 
 Adds a blank line between adjacent `=` assignments to unrelated local variables

@@ -111,7 +111,7 @@ CODE_SAMPLE
                 continue;
             }
 
-            if ($nextStmt->getStartLine() - $stmt->getEndLine() > 1) {
+            if ($this->hasBlankLineBetween($stmt, $nextStmt)) {
                 continue;
             }
 
@@ -150,7 +150,7 @@ CODE_SAMPLE
                 return;
             }
 
-            if ($stmt->getStartLine() - $previousStmt->getEndLine() > 1) {
+            if ($this->hasBlankLineBetween($previousStmt, $stmt)) {
                 return;
             }
 
@@ -160,5 +160,22 @@ CODE_SAMPLE
 
             return;
         }
+    }
+
+    private function hasBlankLineBetween(Node $previous, Node $next): bool
+    {
+        if ($next->getStartLine() - $previous->getEndLine() > 1) {
+            return true;
+        }
+
+        // Token-based spacing rules can add blank lines without changing AST line numbers.
+        $tokens = $this->getFile()->getOldTokens();
+        for ($position = $previous->getEndTokenPos() + 1; $position < $next->getStartTokenPos(); $position++) {
+            if ($tokens[$position]->id === T_WHITESPACE && substr_count($tokens[$position]->text, "\n") >= 2) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
