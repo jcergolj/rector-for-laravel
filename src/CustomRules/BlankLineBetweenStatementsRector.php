@@ -8,8 +8,10 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassLike;
+use PhpParser\Node\Stmt\GroupUse;
 use PhpParser\Node\Stmt\InlineHTML;
 use PhpParser\Node\Stmt\Nop;
+use PhpParser\Node\Stmt\Use_;
 use RectorLaravel\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -48,6 +50,12 @@ final class BlankLineBetweenStatementsRector extends AbstractRector
             }
 
             if ($previous !== null && ! $stmt instanceof Nop) {
+                if (($previous instanceof Use_ || $previous instanceof GroupUse) && ($stmt instanceof Use_ || $stmt instanceof GroupUse)) {
+                    $previous = $stmt;
+
+                    continue;
+                }
+
                 // Skipped-rule probes may share printer tokens with the real file.
                 if (isset($this->skipper) && method_exists($this->skipper, 'matchSkip') && $this->skipper->matchSkip($this, $this->getFile()->getFilePath()) !== null) {
                     return $node;

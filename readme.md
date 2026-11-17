@@ -297,6 +297,8 @@ Adds a blank line between consecutive statements, even when they are closely
 related. Applies to functions, methods, closures, nested control-flow bodies and
 file-level code. Separates assignments, function/method/static calls (including
 `throw_unless()` and `abort_if()`), and boundaries before and after control flow.
+Consecutive `use` imports stay together, including function, constant and grouped
+imports. Existing blank lines between imports are preserved.
 
 ```php
 $person = $mapping->fresh();
