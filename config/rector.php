@@ -19,6 +19,7 @@ use Jcergolj\RectorForLaravel\CustomRules\WrapLongListsRector;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\Privatization\Rector\Class_\FinalizeTestCaseClassRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
 use RectorLaravel\Rector\Class_\AnonymousMigrationsRector;
@@ -67,6 +68,7 @@ return RectorConfig::configure()
     ->withSkip([
         ClosureToArrowFunctionRector::class,
         FinalizeTestCaseClassRector::class,
+        YieldDataProviderRector::class,
         RequestStaticValidateToInjectRector::class => [
             __DIR__.'/tests',
         ],
