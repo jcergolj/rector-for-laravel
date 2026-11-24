@@ -205,6 +205,27 @@ class ExampleTest extends TestCase
 
 Preserves other annotations and avoids duplicate `#[Test]` attributes.
 
+### RemovePhpUnitTestPrefixRector (opt-in)
+
+Changes `public function test_rejects_invalid_language()` to
+`#[Test] public function rejects_invalid_language()` in PHPUnit `TestCase`
+subclasses, including those using an application test base. It keeps existing
+attributes, data providers, signatures, and bodies.
+
+Register it explicitly in your Rector config; it is not in the package defaults:
+
+```php
+->withRules([
+    \Jcergolj\RectorForLaravel\CustomRules\RemovePhpUnitTestPrefixRector::class,
+])
+```
+
+The rule skips name collisions, dependency-bearing methods, and method
+references it recognizes in the same file. It leaves repeated `test_` prefixes
+alone so a second run cannot strip another prefix. Review cross-file and dynamic
+references before applying the rule. External PHPUnit `--filter` patterns that
+match the old method names may need updating.
+
 ## Additional Custom Rules
 
 These rules are also enabled in the default config. The examples below show how
