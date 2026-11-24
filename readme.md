@@ -662,6 +662,32 @@ class CreateUsersTable extends Migration
 
 ---
 
+## Controller and route check (opt-in diagnostic)
+
+Run this from your Laravel project's root, independently of `rector.php`:
+
+```sh
+vendor/bin/rector-laravel-controller-check .
+```
+
+The command reads PHP files under `app/Http/Controllers` and `routes` without
+booting Laravel or modifying files.
+
+- Concrete controllers can declare any subset of Laravel's resource actions, or
+  a lone `__invoke()`. Constructors and `middleware()` don't count as actions.
+- Explicit `Route::get()`, `post()`, `put()`, `patch()`, `delete()`, `options()`,
+  and `any()` calls targeting `[Controller::class, 'action']` or
+  `'Controller@action'` are checked for custom actions and incorrect HTTP verbs.
+  Literal paths are also checked for the expected suffix, such as
+  `DELETE /posts/{post}` for `destroy` or `GET /posts/{post}/edit` for `edit`.
+- Resource registrations and invokable routes don't require URL checks. The
+  check does not infer resource names, evaluate dynamic routes, or expand route
+  groups.
+
+Exit status: `0` for no findings, `1` for violations, and `2` for usage or PHP parse errors.
+
+---
+
 ## 📄 License
 
 This package is open-sourced software licensed under the [MIT license](LICENSE).

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// The read-only controller and route check runs separately:
+// vendor/bin/rector-laravel-controller-check .
+
 use Jcergolj\RectorForLaravel\CustomRules\AddBlankLineAfterPhpUnitAssertionRector;
 use Jcergolj\RectorForLaravel\CustomRules\ArrowFunctionToClosureRector;
 use Jcergolj\RectorForLaravel\CustomRules\BlankLineBetweenStatementsRector;

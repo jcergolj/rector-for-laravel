@@ -1,7 +1,7 @@
 {
     "name": "jcergolj/rector-for-laravel",
     "description": "Rector rules for Laravel projects",
-    "bin": ["bin/rector-laravel-dto-check"],
+    "bin": ["bin/rector-laravel-dto-check", "bin/rector-laravel-controller-check"],
     "require": {
         "driftingly/rector-laravel": "^2.7",
         "nikic/php-parser": "^5.6"
