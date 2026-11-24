@@ -226,6 +226,30 @@ alone so a second run cannot strip another prefix. Review cross-file and dynamic
 references before applying the rule. External PHPUnit `--filter` patterns that
 match the old method names may need updating.
 
+### One DTO per PSR-4 file (opt-in diagnostic)
+
+From the consumer project's root, explicitly pass the DTO directory to scan:
+
+```sh
+vendor/bin/rector-laravel-dto-check app/DataTransferObjects
+```
+
+The command checks only direct `.php` files in that directory against the
+project's Composer PSR-4 mappings. It reports additional named classes and
+their suggested destination paths, leaving the class named after the source
+file in place. An existing destination is reported as a conflict. Files
+without a matching primary class, with multiple namespaces, or with executable
+top-level code (including conditional or anonymous class declarations) are not
+split candidates.
+
+This is read-only. Rector 2.8.4 and 2.8.5
+[only diff and write the file being processed](https://github.com/rectorphp/rector/blob/2.8.5/src/Application/FileProcessor.php);
+they do not expose an added-file operation that previews and applies both
+halves of a split. The command does not remove classes, create files, or run as
+part of Rector. For each suggestion you apply manually, keep the namespace,
+imports, file-level declarations, class attributes, docblock, and class code
+in the new file. Regenerate optimized Composer autoload files if you use them.
+
 ## Additional Custom Rules
 
 These rules are also enabled in the default config. The examples below show how

@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Jcergolj\RectorForLaravel\Diagnostics\DtoFileDiagnostic;
+
+if ($argc !== 2) {
+    fwrite(STDERR, "Usage: rector-laravel-dto-check <dto-directory>\n");
+    exit(2);
+}
+
+$loader = require $_composer_autoload_path ?? __DIR__.'/../vendor/autoload.php';
+
+try {
+    $diagnostics = (new DtoFileDiagnostic)->inspect($argv[1], $loader);
+} catch (InvalidArgumentException $exception) {
+    fwrite(STDERR, $exception->getMessage()."\n");
+    exit(2);
+}
+
+foreach ($diagnostics as $diagnostic) {
+    fwrite(STDOUT, $diagnostic."\n");
+}
