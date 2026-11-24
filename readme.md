@@ -250,6 +250,44 @@ part of Rector. For each suggestion you apply manually, keep the namespace,
 imports, file-level declarations, class attributes, docblock, and class code
 in the new file. Regenerate optimized Composer autoload files if you use them.
 
+## Opt-in Custom Rules
+
+### DatabaseHasToFieldAssertionsRector
+
+Turns a standalone Laravel `$this->assertDatabaseHas()` into one row lookup
+and a separate `assertSame()` for each expected column, including the key.
+It is not enabled in the default config:
+
+```php
+use App\Models\User;
+use Jcergolj\RectorForLaravel\CustomRules\DatabaseHasToFieldAssertionsRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withConfiguredRule(DatabaseHasToFieldAssertionsRector::class, [
+        'users' => [
+            'model' => User::class,
+            'uniqueKey' => 'id',
+            'columns' => ['id' => 'int', 'name' => 'string'],
+        ],
+    ]);
+```
+
+Only map a model to its fixed table and use a key that is unique on its own
+in the database. The rule accepts the literal table name or the mapped
+`Model::class`, and an inline array containing the key. List only columns
+whose raw values come back from the test database as the declared `int` or
+`string` and whose SQL equality agrees with strict PHP equality. For example,
+omit strings with case-insensitive collation and columns that require
+driver-specific type conversion.
+
+The generated lookup uses Laravel's testing connection resolver and reads
+raw columns without applying Eloquent scopes, soft-delete filters, accessors,
+or casts. Calls with an explicit connection argument, dynamic values,
+unlisted columns, or unsupported shapes stay unchanged, as do missing and
+count assertions. Leave pivot tables unmapped and rewrite pivot assertions
+manually; the rule does not infer relationships.
+
 ## Additional Custom Rules
 
 These rules are also enabled in the default config. The examples below show how
