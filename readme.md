@@ -73,6 +73,32 @@ assumes intentionally unguarded models and forward-only migrations: disable
 `RemoveFillableFromUnguardedModelsRector` if you rely on `$fillable` allowlists, and
 `RemoveMigrationDownMethodRector` if you need migration rollbacks.
 
+### Opt-in: AdoptProjectFormRequestRector
+
+Add this to your project's Rector configuration and set `withPaths()` or
+`withSkip()` to limit the requests Rector processes if needed:
+
+```php
+use App\Http\Requests\AppFormRequest;
+use Jcergolj\RectorForLaravel\CustomRules\AdoptProjectFormRequestRector;
+use Rector\Config\RectorConfig;
+
+return RectorConfig::configure()
+    ->withPaths([__DIR__.'/app/Http/Requests'])
+    ->withConfiguredRule(AdoptProjectFormRequestRector::class, [
+        AdoptProjectFormRequestRector::BASE_CLASS => AppFormRequest::class,
+    ]);
+```
+
+The rule switches requests that directly extend Laravel's `FormRequest` to the
+configured base and removes their redundant `authorize(): bool` method. Both
+authorization methods must be public and contain only `return true;`. The base
+must itself directly extend Laravel's `FormRequest`. It may declare unused
+non-public helpers, but not lifecycle hooks, inherited method overrides,
+properties, constants, interfaces, traits, or attributes. The rule leaves
+validation and other methods untouched and skips unresolved classes and
+conflicting imports. It is not registered in the package's default config.
+
 ### AddBlankLineAfterPhpUnitAssertionRector
 
 Adds a blank line around assertions inside PHPUnit test methods so assertion blocks are easier to scan.
